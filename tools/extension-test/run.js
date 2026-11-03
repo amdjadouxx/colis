@@ -64,6 +64,15 @@ const CASES = [
     why: "titres anglais, prix en dollars, prix barre avant le prix courant",
   },
   {
+    page: "panier-vide-reco.html",
+    expect: [],
+    reject: ["support", "coque", "cable", "protection"],
+    why:
+      "panier vide avec un bloc 'Vous aimerez aussi' : rien ne doit etre annonce. " +
+      "Constate sur un vrai panier vide d'AliExpress, ou l'outil facturait une categorie.",
+    attenduVide: true,
+  },
+  {
     page: "stepper-hard.html",
     expect: ["pantalon", "pull", "bijoufantaisie"],
     reject: [],
@@ -152,7 +161,12 @@ window.addEventListener("load", () => setTimeout(() => {
 
   const found = result.ids || [];
   const missing = c.expect.filter((id) => !found.includes(id));
-  const intruders = c.reject.filter((id) => found.includes(id));
+  // Sur une page sans panier, le seul resultat acceptable est : rien du tout.
+  // Lister les intrus connus ne suffirait pas, puisque n'importe quel article
+  // reconnu serait de trop.
+  const intruders = c.attenduVide
+    ? found
+    : c.reject.filter((id) => found.includes(id));
 
   if (missing.length === 0 && intruders.length === 0) {
     console.log(`OK     ${c.page}  [${result.how}, ${result.len} car.]  ${found.join(", ")}`);

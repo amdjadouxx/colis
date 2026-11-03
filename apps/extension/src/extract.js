@@ -54,6 +54,38 @@ const EXCLUDED_TAGS = new Set(["NAV", "HEADER", "FOOTER", "ASIDE", "SCRIPT", "ST
 const RECO_RE =
   /\b(?:vous aimerez|aimerez aussi|recommand|suggestions?|you may also like|similar items|frequently bought|best ?sellers?|tendances?|trending now|sponsoris)/i;
 
+/**
+ * Phrases qui signalent un panier vide. Elles valent mieux que n'importe
+ * quelle heuristique : la page le dit elle-meme.
+ */
+const EMPTY_CART_RE =
+  /\b(?:votre panier est vide|panier vide|your (?:cart|bag) is empty|cart is empty|no items in your cart|total estim[eé]\s*0[.,]00)/i;
+
+/**
+ * L'element est-il DANS une section de recommandation ?
+ *
+ * Tester le texte du seul bloc retenu ne suffit pas : sur un vrai panier
+ * AliExpress, le bloc choisi etait une carte produit a l'interieur de la
+ * section "Vous aimerez aussi", et seul son ancetre portait ce titre. Le
+ * panier etait vide, et l'outil annoncait pourtant une categorie a payer.
+ *
+ * On regarde donc le DEBUT du texte de chaque ancetre : une section commence
+ * par son titre.
+ *
+ * @param {Element} el
+ */
+function inRecoSection(el) {
+  let p = el.parentElement;
+  let montees = 0;
+  while (p && p.tagName !== "BODY" && montees < 12) {
+    const debut = (p.textContent || "").replace(/\s+/g, " ").trim().slice(0, 120);
+    if (RECO_RE.test(debut)) return true;
+    p = p.parentElement;
+    montees++;
+  }
+  return false;
+}
+
 const count = (text, re) => {
   re.lastIndex = 0;
   return (text.match(re) || []).length;
@@ -77,7 +109,7 @@ function measure(el) {
     text,
     prices,
     qtys: count(text, QTY_RE),
-    reco: RECO_RE.test(text),
+    reco: RECO_RE.test(text) || inRecoSection(el),
     length: text.length,
   };
 }
@@ -87,6 +119,25 @@ function measure(el) {
  * @returns {{text: string, prices: number, qtys: number, length: number, how: string}}
  */
 export function extractCartText(doc) {
+  // Quand la page annonce elle-meme un panier vide, on s'arrete la. Sans
+  // cela, le bloc de recommandations prenait sa place et l'outil affichait
+  // des frais pour un panier inexistant : constate sur un vrai panier vide
+  // d'AliExpress, qui annonce pourtant "Votre panier est vide".
+  // textOf et non textContent : textContent inclut le texte des balises
+  // script et style. Une page qui embarque du code dans son body ferait
+  // alors matcher n'importe quelle phrase presente dans ce code.
+  const pageText = doc.body ? textOf(doc.body).replace(/\s+/g, " ") : "";
+  if (EMPTY_CART_RE.test(pageText)) {
+    return {
+      text: "",
+      prices: 0,
+      qtys: 0,
+      length: 0,
+      how: "la page annonce un panier vide",
+      fallback: true,
+    };
+  }
+
   /** @type {ReturnType<typeof score>[]} */
   const candidates = [];
 
