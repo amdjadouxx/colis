@@ -27,8 +27,16 @@ const message = (html) => {
 function render(picked) {
   const r = analyseCart(picked.text);
   if (!r.ok) {
+    // On montre ce qui a ete lu. Un echec muet n'apprend rien ; un echec qui
+    // rend le texte extrait dit tout de suite si le probleme vient du choix
+    // de la zone ou de la reconnaissance des libelles.
     message(
-      "Aucun article reconnu sur cette page.<br><br>Ouvre la page du panier ou de la commande, puis reessaie."
+      `Aucun article reconnu.<br><br>` +
+        `Ouvre la page du panier ou de la commande, puis reessaie.` +
+        `<div class="how" style="margin-top:10px;padding:8px 0 0">Zone lue : ${esc(picked.how)}, ` +
+        `${picked.length} caracteres.</div>` +
+        `<pre style="white-space:pre-wrap;font:10px ui-monospace,Consolas,monospace;` +
+        `max-height:220px;overflow:auto;margin:6px 0 0">${esc(picked.text.slice(0, 1200))}</pre>`
     );
     return;
   }

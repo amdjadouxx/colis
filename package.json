@@ -20,7 +20,9 @@
     "check:negative": "node tools/negative-control/check.js",
     "probe:coverage": "node tools/coverage-probe/probe.js",
     "test:concept": "node tools/concept-test/run.js",
-    "test:extension": "node tools/extension-test/run.js"
+    "test:extension": "node tools/extension-test/run.js",
+    "check": "npm test && npm run check:negative && npm run build:local && npm run verify:local && npm run test:extension",
+    "serve:test": "node tools/serve-test/server.js"
   },
   "devDependencies": {
     "wrangler": "4.42.0"
