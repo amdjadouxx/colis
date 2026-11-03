@@ -112,16 +112,61 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 $("ver").textContent = " Catalogue " + CATALOG_VERSION + ", " + ITEMS.length + " articles.";
 
+/**
+ * Le contenu colle est-il du HTML de page plutot que du texte de panier ?
+ *
+ * Deux signaux conjoints, une balise ouvrante ET une balise fermante, pour ne
+ * pas prendre un libelle produit contenant un chevron pour du balisage.
+ */
+function looksLikeHtml(s) {
+  return /<[a-z][\s\S]*>/i.test(s) && /<\/[a-z]+>/i.test(s);
+}
+
+/**
+ * Du HTML colle passe par le MEME lecteur de zone que l'extension, puis par
+ * le meme parseur. C'est ce qui permet d'eprouver le markup reel d'une place
+ * de marche sans aller le chercher sur le site : l'utilisateur copie le code
+ * de sa propre page de panier et le colle ici.
+ *
+ * Le document est construit par DOMParser, donc inerte : ni script execute,
+ * ni ressource chargee.
+ */
+function textFromHtml(html) {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return extractCartText(doc);
+}
+
 function render() {
-  const text = $("in").value;
+  const raw = $("in").value;
   const box = $("out");
-  if (!text.trim()) {
+  if (!raw.trim()) {
     box.innerHTML = '<div class="empty">Colle un panier, puis Analyser.</div>';
     return;
   }
+  let text = raw;
+  let picked = null;
+  if (looksLikeHtml(raw)) {
+    try {
+      picked = textFromHtml(raw);
+      text = picked.text;
+    } catch (err) {
+      box.innerHTML = '<div class="empty">HTML illisible : ' + esc(err.message) + "</div>";
+      return;
+    }
+  }
   const r = analyseCart(text, { includeVat: $("vat").checked });
   if (!r.ok) {
-    box.innerHTML = '<div class="empty">' + esc(r.reason) + "</div>";
+    // On montre ce qui a ete lu : un echec muet n'apprend rien, un echec qui
+    // rend la zone extraite dit si le probleme vient du choix de zone ou de
+    // la reconnaissance des libelles.
+    box.innerHTML =
+      '<div class="empty">' + esc(r.reason) +
+      (picked
+        ? '<div class="code" style="margin-top:10px">Zone lue : ' + esc(picked.how) + ", " +
+          picked.length + " caracteres.</div><pre style=\"white-space:pre-wrap;font:10px ui-monospace,Consolas,monospace;max-height:240px;overflow:auto;margin:6px 0 0\">" +
+          esc(text.slice(0, 1500)) + "</pre>"
+        : "") +
+      "</div>";
     return;
   }
 

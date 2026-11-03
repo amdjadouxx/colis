@@ -22,6 +22,10 @@ const OUT_DIR = join(ROOT, "apps", "web");
 
 /** Modules concatenes, dans l'ordre des dependances. */
 const MODULES = [
+  // Le lecteur de zone panier est embarque dans la page aussi : elle accepte
+  // du HTML colle, et doit alors choisir la zone exactement comme
+  // l'extension. Sans lui, la page ne saurait traiter que du texte.
+  "apps/extension/src/extract.js",
   "packages/partition/src/index.js",
   "packages/rules/src/index.js",
   "packages/catalog/src/index.js",
@@ -70,7 +74,7 @@ ${dataBlock}
 
 ${bodies.join("\n\n")}
 
-export { analyseCart, parseCart, partition, estimate, ITEMS, CATALOG_VERSION, WARNING, resolveText };
+export { analyseCart, parseCart, partition, estimate, ITEMS, CATALOG_VERSION, WARNING, resolveText, extractCartText };
 `;
 
 await mkdir(OUT_DIR, { recursive: true });

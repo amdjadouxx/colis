@@ -137,3 +137,24 @@ test("regression : un fragment court n ouvre pas d article, un libelle si", () =
   assert.equal(parseCart("Earbuds TWS\nUS $19.99").items.length, 1);
   assert.equal(parseCart("Coque transparente\nJean mom delave  19,99 EUR").items.length, 2);
 });
+
+test("regression : prix barre suivi du prix courant, avec residu court", () => {
+  // Mise en page en colonnes : libelle / prix barre / prix courant. Le residu
+  // "US" n est pas un libelle, donc le second montant corrige l article au
+  // lieu d ouvrir une ligne fantome. Sans cela le prix retenu etait le prix
+  // barre, soit le plus eleve.
+  const r = parseCart("Wireless Earbuds TWS\nUS $19.99\nUS $12.99");
+  assert.equal(r.items.length, 1);
+  assert.equal(r.items[0].unitPrice, 12.99);
+  assert.equal(r.items[0].currency, "USD");
+});
+
+test("limite connue : une quantite isolee va a l article suivant", () => {
+  // Documente le comportement plutot que de pretendre qu il est resolu. Une
+  // ligne de quantite isolee est structurellement ambigue, et la rattacher au
+  // precedent cassait 174 paniers sur 400 au fuzz.
+  const r = parseCart("Article A\n9,99 EUR\nx 3\nArticle B\n4,99 EUR");
+  assert.equal(r.items.length, 2);
+  assert.equal(r.items[0].qty, 1, "l article precedent garde la quantite par defaut");
+  assert.equal(r.items[1].qty, 3, "la quantite isolee revient a l article suivant");
+});

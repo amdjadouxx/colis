@@ -252,10 +252,28 @@ export function parseCart(blob) {
     // d'un article deja ferme, donc un prix barre suivi du prix courant sur
     // deux lignes. On corrige le dernier article au lieu d'ouvrir une ligne
     // fantome. Sans cela, le prix retenu etait le prix barre, le plus eleve.
-    if (price !== null && !text && qty === null && buffer.length === 0 && items.length > 0) {
+    if (price !== null && !looksLikeTitle(text) && qty === null && buffer.length === 0 && items.length > 0) {
       items[items.length - 1].unitPrice = price;
+      if (currency) {
+        items[items.length - 1].currency = currency;
+        lastCurrency = currency;
+        currencies.add(currency);
+      }
       continue;
     }
+
+    // LIMITE CONNUE, et assumee. Une ligne de quantite isolee est ambigue :
+    // elle peut appartenir a l'article qui precede, quand la mise en page
+    // place la quantite apres les prix, ou a celui qui suit. Aucun signal du
+    // texte ne les separe, et l'essai de la rattacher au precedent a casse
+    // 174 paniers sur 400 au fuzz. Elle reste donc rattachee au SUIVANT.
+    //
+    // Consequence : sur une mise en page en colonnes du type
+    // libelle / prix barre / prix / quantite, la quantite tombe sur la ligne
+    // d'apres. Le nombre de categories reste juste, les valeurs non.
+    // Resoudre cela demande la structure du DOM, pas le texte.
+
+
 
     if (currency) { lastCurrency = currency; currencies.add(currency); }
     if (qty !== null) pendingQty = qty;
