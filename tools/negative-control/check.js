@@ -63,11 +63,29 @@ const MUTATIONS = [
     from: "if (opensNewItem) flush(null);",
     to: "if (false) flush(null);",
   },
+  {
+    name: "telemetrie introduite dans le moteur (fait tomber le RGPD)",
+    file: "packages/analyse/src/index.js",
+    from: 'import { estimate } from "@colis/rules";',
+    to: 'import { estimate } from "@colis/rules";\nfetch("https://example.test/telemetry");',
+  },
+  {
+    name: "stockage navigateur introduit dans l extension",
+    file: "apps/extension/src/popup.js",
+    from: "const out = document.getElementById(\"out\");",
+    to: "const out = document.getElementById(\"out\");\nlocalStorage.setItem(\"last\", \"1\");",
+  },
+  {
+    name: "permission d hote large ajoutee au manifeste",
+    file: "apps/extension/manifest.json",
+    from: '"permissions": ["activeTab", "scripting"],',
+    to: '"permissions": ["activeTab", "scripting"],\n  "host_permissions": ["<all_urls>"],',
+  },
 ];
 
 async function suitePasses(dir) {
   try {
-    await run(process.execPath, ["--test", "packages/catalog/test/catalog.test.js", "packages/partition/test/partition.test.js", "packages/parse/test/invariants.test.js", "packages/parse/test/regressions.test.js", "packages/analyse/test/pipeline.test.js"], {
+    await run(process.execPath, ["--test", "packages/catalog/test/catalog.test.js", "packages/partition/test/partition.test.js", "packages/parse/test/invariants.test.js", "packages/parse/test/regressions.test.js", "packages/analyse/test/pipeline.test.js", "packages/analyse/test/no-network.test.js"], {
       cwd: dir,
       windowsHide: true,
     });
