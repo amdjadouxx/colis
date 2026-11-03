@@ -104,3 +104,19 @@ test("pipeline : au-dessus de 150 EUR seuls les frais de traitement restent", ()
   assert.equal(r.perCategory, 2);
   assert.equal(r.notApplied.length, 1);
 });
+
+test("pipeline : une page sans prix n est pas annoncee comme un panier", () => {
+  // Trouve en pilotant un vrai navigateur : sur une page 404 d AliExpress le
+  // mot "chaussettes" du pied de page suffisait a faire apparaitre un
+  // article, et sur un ecran de verification Temu le mot "jouet". Un panier
+  // porte des prix.
+  const r = analyseCart("Chaussettes homme\nJouets enfants\nAide Service client\nRetour a l accueil");
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /Aucun panier detecte/);
+});
+
+test("pipeline : un seul prix suffit a reconnaitre un panier", () => {
+  const r = analyseCart("Chaussettes homme  5,99 EUR\nJouets enfants");
+  assert.equal(r.ok, true);
+  assert.equal(r.categories.min, 2);
+});

@@ -98,8 +98,19 @@ export function extractCartText(doc) {
   }
 
   if (candidates.length === 0) {
-    const text = doc.body ? doc.body.innerText || doc.body.textContent || "" : "";
-    return { text, prices: count(text, PRICE_RE), qtys: count(text, QTY_RE), length: text.length, how: "page entiere" };
+    // Aucun bloc ne porte deux montants : cette page n'est pas un panier.
+    // On le DIT, au lieu de rendre la page entiere. Sur une page 404 ou un
+    // ecran de verification, le texte de navigation suffisait a faire
+    // reconnaitre un article inexistant.
+    const text = doc.body ? textOf(doc.body) : "";
+    return {
+      text,
+      prices: count(text, PRICE_RE),
+      qtys: count(text, QTY_RE),
+      length: text.length,
+      how: "aucun bloc de panier trouve",
+      fallback: true,
+    };
   }
 
   // Regle de choix, en trois etapes ordonnees. Pas de score pondere : des

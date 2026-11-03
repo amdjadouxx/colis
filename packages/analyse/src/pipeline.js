@@ -48,6 +48,22 @@ export function analyseCart(blob, options = {}) {
     };
   }
 
+  // Un panier porte des prix. Sans un seul prix parmi les lignes reconnues,
+  // ce qu'on tient vient du texte de navigation, pas d'un panier : sur une
+  // page 404 d'AliExpress le mot "chaussettes" suffisait a faire apparaitre
+  // un article, et sur un ecran de verification Temu le mot "jouet". Mieux
+  // vaut ne rien annoncer que d'annoncer un panier qui n'existe pas.
+  if (!lines.some((l) => l.value > 0)) {
+    return {
+      ok: false,
+      reason:
+        "Aucun panier detecte sur cette page : des libelles ont ete reconnus, mais aucun prix. Ouvrir la page du panier ou de la commande.",
+      parsed,
+      unrecognised,
+      lines,
+    };
+  }
+
   const result = analyse({
     lines,
     goodsValue: options.goodsValue ?? (parsed.totalValue ?? undefined),
