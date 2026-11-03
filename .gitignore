@@ -2,3 +2,5 @@ node_modules/
 .wrangler/
 .dev.vars
 *.log
+apps/web/engine.bundle.js
+apps/web/index.html

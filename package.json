@@ -14,7 +14,12 @@
     "sync:taric": "node tools/taric-sync/sync.js",
     "watch:rules": "node tools/rules-watch/watch.js",
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "build:local": "node tools/build-local/build.js",
+    "verify:local": "node tools/build-local/verify.js",
+    "check:negative": "node tools/negative-control/check.js",
+    "probe:coverage": "node tools/coverage-probe/probe.js",
+    "test:concept": "node tools/concept-test/run.js"
   },
   "devDependencies": {
     "wrangler": "4.42.0"
