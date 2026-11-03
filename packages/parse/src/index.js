@@ -38,11 +38,40 @@ const QTY = [
   /(?:qt[eé]|quantit[eé]|qty|quantity|menge|cantidad)\s*[:=]?\s*(\d{1,3})/i,
 ];
 
-/** Lignes a ignorer : totaux, livraison, promos, en-tetes. */
+/**
+ * Bruit franc : ces mots en tete de ligne ne designent jamais un produit.
+ */
 const NOISE =
-  /^(?:total|sous[- ]total|subtotal|livraison|shipping|exp[eé]dition|frais|remise|discount|promo|coupon|tva|vat|taxe|order|commande\s+n|num[eé]ro|date|adresse|address|paiement|payment|merci|thank|voir|view|suivre|track|retour|return|panier|cart|r[eé]sum[eé]|summary)\b/i;
+  /^(?:total|sous[- ]total|subtotal|livraison|shipping|exp[eé]dition|remise|discount|promo|coupon|tva|vat|taxe|commande\s+n|num[eé]ro\s|adresse|address|paiement|payment|merci|thank|suivre|track|retour|return|voir|view|order|date)\b/i;
+
+/**
+ * Bruit ambigu : ces mots sont aussi des noms de produits vendus par les
+ * places de marche ("Panier de rangement en osier", "Sac cadeau"). On ne les
+ * ecarte donc que si la ligne est courte, c'est-a-dire un intitule de section
+ * et non un libelle de produit. Sans cette distinction, un panier en osier
+ * disparaissait du calcul comme s'il etait l'en-tete du panier d'achat.
+ */
+const WEAK_NOISE = /^(?:panier|cart|frais|r[eé]sum[eé]|summary)\b/i;
+/** Deux mots au plus : "Panier", "Mon panier", "Panier (3)". */
+const SHORT_LINE = /^\W*\w+(?:\W+\w+)?\W*$/;
 
 const num = (s) => Number(s.replace(",", "."));
+
+/**
+ * La ligne suivante porte-t-elle un prix ou une quantite ? Si oui, la ligne
+ * courante est un libelle de produit, meme si son premier mot ressemble a un
+ * intitule de section.
+ * @param {string[]} lines
+ * @param {number} index
+ */
+function followsWithPriceOrQty(lines, index) {
+  const next = lines[index + 1];
+  if (!next) return false;
+  PRICE.lastIndex = 0;
+  if (PRICE.test(next)) return true;
+  PRICE.lastIndex = 0;
+  return QTY.some((re) => re.test(next));
+}
 
 /**
  * @param {string} line
@@ -115,12 +144,23 @@ export function parseCart(blob) {
     items.push({ title, qty, unitPrice: price });
   };
 
-  for (const line of raw) {
+  for (let index = 0; index < raw.length; index++) {
+    const line = raw[index];
     if (NOISE.test(line)) {
       ignored.push(line);
       continue;
     }
     const { price, qty, text } = readLine(line);
+
+    // Le bruit ambigu n'est ecarte que si la ligne est courte, sans prix, et
+    // qu'aucune ligne de prix ou de quantite ne la suit : une ligne suivie de
+    // son prix est un produit, jamais un intitule de section. "Panier osier"
+    // puis "EUR 20.06" disparaissait du calcul sans cette lecture en avant.
+    const followed = followsWithPriceOrQty(raw, index);
+    if (price === null && !followed && WEAK_NOISE.test(line) && SHORT_LINE.test(line)) {
+      ignored.push(line);
+      continue;
+    }
 
     // Une ligne qui n'est ni un attribut, ni une quantite, ni un prix seul,
     // ouvre un nouvel article. Si un titre attend deja sans prix, il se ferme

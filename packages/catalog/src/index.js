@@ -9,10 +9,24 @@
  */
 
 import catalog from "../data/catalog.json" with { type: "json" };
+import extra from "../data/catalog-extra.json" with { type: "json" };
+import aliasesEn from "../data/aliases-en.json" with { type: "json" };
 
 export const CATALOG_VERSION = catalog.version;
-export const ITEMS = catalog.items;
 export const WARNING = catalog.warning;
+
+/**
+ * Catalogue effectif : base, familles ajoutees, synonymes anglais fusionnes.
+ *
+ * Decoupe en trois fichiers parce qu'ils ont trois raisons de changer : la
+ * base suit la nomenclature, les familles s'ajoutent quand une sonde de
+ * couverture trouve un trou, les synonymes anglais quand les titres changent
+ * de langue. Les melanger rendrait chaque relecture penible.
+ */
+export const ITEMS = [...catalog.items, ...extra.items].map((it) => {
+  const en = aliasesEn.aliases[it.id] ?? [];
+  return en.length ? { ...it, synonyms: [...(it.synonyms ?? []), ...en] } : it;
+});
 
 /** @returns {string[]} Les rayons, dans l'ordre du catalogue. */
 export function rayons() {

@@ -84,7 +84,10 @@ test("pipeline : lignes partageant une categorie signalees comme telles", () => 
 });
 
 test("pipeline : collage illisible le dit au lieu de rendre zero", () => {
-  const r = analyseCart("Humidificateur ultrasonique\nAspirateur de bureau sans fil");
+  // Humidificateur et aspirateur etaient inconnus a l'ecriture de ce test ;
+  // ils sont au catalogue depuis la sonde de couverture. Il faut donc du texte
+  // qui ne designe aucun produit, pas un produit hors catalogue.
+  const r = analyseCart("zzqx wwvb\nmmkl ppnr tttz");
   assert.equal(r.ok, false);
   assert.match(r.reason, /Aucun article reconnu/);
 });
