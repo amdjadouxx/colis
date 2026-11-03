@@ -160,7 +160,5 @@ export function estimate({ categories, goodsValue = 100, includeVat = false, reg
       min: round(categories.min * perCategoryNet * multiplier),
       max: round(categories.max * perCategoryNet * multiplier),
     },
-    /** Cout si chaque article etait commande seul : une categorie par commande. */
-    ifOrderedSeparately: null,
   };
 }

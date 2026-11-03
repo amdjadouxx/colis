@@ -27,6 +27,7 @@ import { dirname, join } from "node:path";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..", "..");
 const CATALOG = join(ROOT, "packages", "catalog", "data", "catalog.json");
+const CATALOG_EXTRA = join(ROOT, "packages", "catalog", "data", "catalog-extra.json");
 const OUT = join(ROOT, "packages", "catalog", "data", "nomenclature.json");
 const RELEASES = "https://api.github.com/repos/rousseauxy/taric-opendata/releases?per_page=30";
 
@@ -45,12 +46,20 @@ async function latestEuRelease() {
   return eu[0];
 }
 
-/** Codes a 6 chiffres utilises par le catalogue, dedupliques. */
+/**
+ * Codes a 6 chiffres utilises par le catalogue, dedupliques.
+ *
+ * Les deux fichiers sont lus. La premiere version ne lisait que catalog.json
+ * et annoncait 68 articles alors que le catalogue en compte 90 : les familles
+ * ajoutees apres la sonde de couverture n'etaient jamais verifiees.
+ */
 async function catalogCodes() {
-  const catalog = JSON.parse(await readFile(CATALOG, "utf8"));
+  const base = JSON.parse(await readFile(CATALOG, "utf8"));
+  const extra = JSON.parse(await readFile(CATALOG_EXTRA, "utf8"));
+  const items = [...base.items, ...extra.items];
   const codes = new Set();
-  for (const item of catalog.items) for (const c of item.codes) codes.add(c);
-  return { codes: [...codes].sort(), version: catalog.version, count: catalog.items.length };
+  for (const item of items) for (const c of item.codes) codes.add(c);
+  return { codes: [...codes].sort(), version: base.version, count: items.length };
 }
 
 async function main() {
@@ -65,7 +74,16 @@ async function main() {
     size: a.size,
     url: a.browser_download_url,
   }));
-  const nomenclatureAsset = assets.find((a) => /nomenclature/i.test(a.name));
+  // Le mirror nomme ses archives "eu-taric-AAAA-MM.zip". La premiere version
+  // cherchait un asset contenant "nomenclature" : ce nom n'existe pas, donc
+  // le script n'a jamais pu aboutir. On vise l'archive de la release
+  // courante, puis la plus recente des archives EU a defaut.
+  const month = release.tag_name.replace(/^eu-/, "");
+  const nomenclatureAsset =
+    assets.find((a) => a.name === `eu-taric-${month}.zip`) ??
+    assets
+      .filter((a) => /^eu-taric-\d{4}-\d{2}\.zip$/.test(a.name))
+      .sort((a, b) => (a.name < b.name ? 1 : -1))[0];
 
   if (!nomenclatureAsset) {
     console.error(
