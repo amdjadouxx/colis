@@ -30,8 +30,8 @@ const MUTATIONS = [
   {
     name: "frontiere de mot sur EUR retiree (bug secteur/20W)",
     file: "packages/parse/src/index.js",
-    from: "\\bEUR\\b)\\s{0,2}",
-    to: "EUR)\\s{0,2}",
+    from: "(€|\\bEUR\\b|\\$|\\bUSD\\b|£|\\bGBP\\b))\\s{0,2}",
+    to: "(€|EUR|\\$|USD|£|GBP))\\s{0,2}",
   },
   {
     name: "premier montant de la ligne au lieu du dernier (bug lot de 3)",
@@ -42,14 +42,32 @@ const MUTATIONS = [
   {
     name: "seuil de titre remonte a 6 lettres (bug Mug, Jean)",
     file: "packages/parse/src/index.js",
-    from: "length < 3)",
-    to: "length < 6)",
+    from: 'const looksLikeTitle = (s) => s.replace(/[^a-zA-Z]/g, "").length >= 3;',
+    to: 'const looksLikeTitle = (s) => s.replace(/[^a-zA-Z]/g, "").length >= 6;',
+  },
+  {
+    name: "selecteur de quantite -/N/+ non replie (tous les prix perdus)",
+    file: "packages/parse/src/index.js",
+    from: "  collapseSteppers(raw);",
+    to: "  // collapseSteppers(raw);",
+  },
+  {
+    name: "prix barre retenu au lieu du prix courant",
+    file: "packages/parse/src/index.js",
+    from: "      items[items.length - 1].unitPrice = price;",
+    to: "      items[items.length - 1].unitPrice = items[items.length - 1].unitPrice ?? price;",
+  },
+  {
+    name: "devise etrangere confondue avec des euros",
+    file: "packages/parse/src/index.js",
+    from: "    foreignCurrency: currencies.size > 0 && !(currencies.size === 1 && currencies.has(\"EUR\")),",
+    to: "    foreignCurrency: false,",
   },
   {
     name: "espaces libres avant le symbole monetaire",
     file: "packages/parse/src/index.js",
-    from: "(\\d+(?:[.,]\\d{1,2})?)\\s?(?:€",
-    to: "(\\d+(?:[.,]\\d{1,2})?)\\s*(?:€",
+    from: "(\\d+(?:[.,]\\d{1,2})?)\\s?(?:(€",
+    to: "(\\d+(?:[.,]\\d{1,2})?)\\s*(?:(€",
   },
   {
     name: "glouton au lieu du minimum exact de categories",
