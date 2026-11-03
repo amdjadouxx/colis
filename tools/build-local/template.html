@@ -36,7 +36,11 @@ button.ghost{background:transparent;color:var(--accent)}
 .big{font-size:30px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .big small{font-size:14px;font-weight:600;color:var(--muted)}
 .sub{color:var(--cost);font-weight:700;font-size:18px;margin-top:6px;font-variant-numeric:tabular-nums}
-table{width:100%;border-collapse:collapse;font-size:13px}
+/* Le tableau est le seul element qui peut depasser la largeur du telephone :
+   il defile dans son propre conteneur, pour que la page elle-meme ne scrolle
+   jamais lateralement. Defaut vu a 400 px, colonne Surcout coupee. */
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:340px}
 th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
   padding:8px 16px;border-bottom:1px solid var(--line);font-weight:600}
 td{padding:8px 16px;border-bottom:1px solid var(--line);vertical-align:top}
@@ -131,7 +135,7 @@ function render() {
     (r.overallSurcharge !== null ? " — " + pct(r.overallSurcharge) + " sur " + eur(r.goodsValue) : "") +
     "</div></div>";
 
-  html += "<table><thead><tr><th>Article</th><th class='n'>Prix</th><th class='n'>Frais</th><th class='n'>Surcout</th></tr></thead><tbody>";
+  html += "<div class='tablewrap'><table><thead><tr><th>Article</th><th class='n'>Prix</th><th class='n'>Frais</th><th class='n'>Surcout</th></tr></thead><tbody>";
   for (const row of r.rows) {
     const hot = row.surcharge !== null && row.surcharge >= 1;
     html +=
@@ -144,14 +148,14 @@ function render() {
       '<td class="n">' + eur(row.fee) + "</td>" +
       '<td class="n rate' + (hot ? " hot" : "") + '">' + pct(row.surcharge) + "</td></tr>";
   }
-  html += "</tbody></table>";
+  html += "</tbody></table></div>";
 
   const notes = [];
   if (r.removable.length) {
     notes.push(
       '<div class="note bad"><b>Les frais depassent le prix de ces articles.</b> ' +
         r.removable.map((x) => esc(x.label) + " (" + eur(x.value) + ", " + pct(x.ratio) + ")").join(", ") +
-        ". Les retirer supprime " + eur(r.perCategory) + " chacun."
+        ". Les retirer supprime " + eur(r.perCategory) + " chacun.</div>"
     );
   }
   const lineByLine = r.coverage.recognised * r.perCategory;
