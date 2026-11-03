@@ -74,3 +74,27 @@ test("regression : titre court legitime conserve", () => {
     assert.equal(r.items[0].title, title);
   }
 });
+
+test("regression : reference de commande ecartee ou qu'elle commence", () => {
+  // "Votre commande AB-2291" passait pour un produit : le filtre etait ancre
+  // en debut de ligne et attendait "Commande n". Trouve en executant la page
+  // dans un navigateur, pas par les tests.
+  for (const line of [
+    "Votre commande AB-2291",
+    "Your order #PO-211-15381384950391486",
+    "Commande n 77213445",
+    "Facture INV-20451",
+  ]) {
+    const r = parseCart(`${line}\nT-shirt coton col rond  5,99 EUR`);
+    assert.equal(r.items.length, 1, `"${line}" ne doit pas compter comme un produit`);
+    assert.match(r.items[0].title, /T-shirt/);
+  }
+});
+
+test("regression : un produit contenant un nombre reste un produit", () => {
+  // Le filtre exige deux signaux conjoints (mot de commande ET identifiant),
+  // sinon un produit a reference chiffree disparaitrait.
+  const r = parseCart("Lot de 100 perles rondes 6mm  4,50 EUR");
+  assert.equal(r.items.length, 1);
+  assert.equal(r.items[0].unitPrice, 4.5);
+});

@@ -52,6 +52,18 @@ const NOISE =
  * disparaissait du calcul comme s'il etait l'en-tete du panier d'achat.
  */
 const WEAK_NOISE = /^(?:panier|cart|frais|r[eé]sum[eé]|summary)\b/i;
+
+/**
+ * Ligne de reference de commande, ou qu'elle commence.
+ *
+ * Le filtre ancre en debut de ligne attendait "Commande n...", donc
+ * "Votre commande AB-2291" passait pour un produit et faisait sous-estimer le
+ * total. On exige deux signaux conjoints, le mot et un identifiant, pour ne
+ * pas ecarter un produit qui contiendrait l'un des deux par hasard.
+ */
+const ORDER_REF =
+  /\b(?:commande|order|facture|invoice|bestellung|pedido)\b/i;
+const HAS_ID = /#\s*\w|\b[A-Z]{2,}[-\s]?\d{3,}\b|\b\d{6,}\b/;
 /** Deux mots au plus : "Panier", "Mon panier", "Panier (3)". */
 const SHORT_LINE = /^\W*\w+(?:\W+\w+)?\W*$/;
 
@@ -146,7 +158,7 @@ export function parseCart(blob) {
 
   for (let index = 0; index < raw.length; index++) {
     const line = raw[index];
-    if (NOISE.test(line)) {
+    if (NOISE.test(line) || (ORDER_REF.test(line) && HAS_ID.test(line))) {
       ignored.push(line);
       continue;
     }
