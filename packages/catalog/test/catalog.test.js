@@ -137,3 +137,35 @@ test("les fichiers de catalogue sont du JSON valide et coherent", () => {
     ids.add(it.id);
   }
 });
+
+test("conformite aux exemples publies par la douane", () => {
+  // Exemples repris de douane.gouv.fr. Ce sont les seules verites de
+  // reference disponibles : si le moteur ne les reproduit pas, il est faux,
+  // quelle que soit la qualite du reste.
+
+  // "Un t-shirt et un jouet constituent deux categories differentes."
+  // Envoi de 35 EUR : 6 EUR de droit forfaitaire + 4 EUR de frais = 10 EUR.
+  const deux = partition(toArticles(["tshirt", "jouet"]));
+  assert.equal(deux.min, 2, "t-shirt et jouet font deux categories");
+  const q1 = estimate({ categories: deux, goodsValue: 35 });
+  assert.equal(q1.lines.find((l) => l.id === "droit-forfaitaire").perCategory, 3);
+  assert.equal(q1.lines.find((l) => l.id === "frais-traitement").perCategory, 2);
+  assert.equal(q1.total.min, 10, "6 EUR de droit plus 4 EUR de frais");
+
+  // "Deux t-shirts identiques de couleurs differentes peuvent etre
+  // consideres comme une seule categorie d article."
+  const identiques = partition(toArticles(["tshirt"]));
+  assert.equal(identiques.min, 1);
+  assert.equal(estimate({ categories: identiques, goodsValue: 20 }).total.min, 5);
+
+  // "Envoi d une valeur superieure a 150 EUR : application des frais de
+  // traitement de 2 EUR uniquement." Exemple du casque a 250 EUR.
+  const casque = partition(toArticles(["ecouteurs"]));
+  const q2 = estimate({ categories: casque, goodsValue: 250 });
+  assert.equal(q2.total.min, 2, "au-dela de 150 EUR, seuls les frais de traitement restent");
+  assert.equal(q2.notApplied[0].id, "droit-forfaitaire");
+
+  // Le 3,60 EUR affiche par Temu en juillet : 3 EUR majores de la TVA.
+  const tva = estimate({ categories: { min: 1, max: 1 }, goodsValue: 20, includeVat: true });
+  assert.equal(tva.lines.find((l) => l.id === "droit-forfaitaire").perCategory, 3.6);
+});
