@@ -19,7 +19,8 @@
     "verify:local": "node tools/build-local/verify.js",
     "check:negative": "node tools/negative-control/check.js",
     "probe:coverage": "node tools/coverage-probe/probe.js",
-    "test:concept": "node tools/concept-test/run.js"
+    "test:concept": "node tools/concept-test/run.js",
+    "test:extension": "node tools/extension-test/run.js"
   },
   "devDependencies": {
     "wrangler": "4.42.0"

@@ -102,3 +102,38 @@ test("les baremes ne se chevauchent pas et portent leurs sources", () => {
 test("une date sans bareme connu est une erreur", () => {
   assert.throws(() => regimeFor("2019-01-01"), /Aucun bareme connu/);
 });
+
+test("le mobilier de page ne resout vers aucun produit", () => {
+  // "Mon panier" resolvait vers "Panier de rangement" parce que le libelle
+  // "Panier, corbeille" indexait le fragment "Panier" tout seul. Un libelle
+  // dont un fragment est un mot de navigation pollue tous les paniers.
+  const furniture = [
+    "Mon panier",
+    "Panier",
+    "Votre commande",
+    "Mes commandes",
+    "Total",
+    "Sous-total",
+    "Livraison gratuite",
+    "Voir le panier",
+    "Shopping cart",
+    "Your order",
+    "Checkout",
+    "Mon compte",
+  ];
+  for (const s of furniture) {
+    const r = resolveText(s);
+    assert.equal(r.matches.length, 0, `"${s}" ne doit resoudre vers aucun article, trouve : ${r.matches.map((m) => m.id).join(", ")}`);
+  }
+});
+
+test("les fichiers de catalogue sont du JSON valide et coherent", () => {
+  // Un remplacement automatique a deja casse catalog-extra.json en silence.
+  const ids = new Set();
+  for (const it of ITEMS) {
+    assert.ok(typeof it.id === "string" && it.id.length > 0, `identifiant invalide : ${JSON.stringify(it.id)}`);
+    assert.ok(typeof it.label === "string" && it.label.length > 2, `libelle invalide pour ${it.id}`);
+    assert.ok(!ids.has(it.id), `identifiant duplique : ${it.id}`);
+    ids.add(it.id);
+  }
+});

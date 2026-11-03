@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Frais par categorie",
+  "version": "0.1.0",
+  "description": "Lit le panier de la page ouverte et calcule les frais douaniers par categorie tarifaire. Tout le calcul reste dans le navigateur.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_title": "Analyser ce panier",
+    "default_popup": "src/popup.html"
+  }
+}

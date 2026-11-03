@@ -4,3 +4,5 @@ node_modules/
 *.log
 apps/web/engine.bundle.js
 apps/web/index.html
+apps/extension/src/injected.js
+apps/extension/src/engine.bundle.js

@@ -89,6 +89,28 @@ if (!page.includes("function analyseCart")) {
 }
 await writeFile(join(OUT_DIR, "index.html"), page, "utf8");
 
+// Extension : meme moteur, plus le lecteur de panier transforme en script
+// injectable. Un script injecte par `files` rend la valeur de sa derniere
+// expression, d'ou l'enveloppe en expression de fonction immediatement
+// appelee : pas de module, pas d'import, une valeur en retour.
+const EXT_SRC = join(ROOT, "apps", "extension", "src");
+const extract = await read("apps/extension/src/extract.js");
+const injected = `/**
+ * GENERE par tools/build-local/build.js depuis extract.js. Ne pas modifier.
+ */
+(() => {
+${flatten(extract)}
+  try {
+    return extractCartText(document);
+  } catch (err) {
+    return { text: "", how: "erreur : " + err.message, length: 0, prices: 0, qtys: 0 };
+  }
+})();
+`;
+await writeFile(join(EXT_SRC, "injected.js"), injected, "utf8");
+await writeFile(join(EXT_SRC, "engine.bundle.js"), bundle, "utf8");
+
 console.log(`Bundle  : apps/web/engine.bundle.js (${(bundle.length / 1024).toFixed(0)} Ko)`);
+console.log(`Extension : apps/extension/src/{injected,engine.bundle}.js`);
 console.log(`Page    : apps/web/index.html (${(page.length / 1024).toFixed(0)} Ko, autonome)`);
 console.log(`Modules : ${MODULES.length}  |  donnees inlinees : ${Object.keys(DATA).length}`);
