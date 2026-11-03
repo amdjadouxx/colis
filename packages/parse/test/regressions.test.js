@@ -98,3 +98,42 @@ test("regression : un produit contenant un nombre reste un produit", () => {
   assert.equal(r.items.length, 1);
   assert.equal(r.items[0].unitPrice, 4.5);
 });
+
+test("regression : selecteur de quantite -/N/+ lu comme une quantite", () => {
+  // Les paniers reels affichent la quantite avec deux boutons. Une fois le
+  // texte extrait cela donne trois lignes, et chacune coupait l accumulation
+  // du libelle : TOUS les prix de la page etaient perdus.
+  const r = parseCart("Jean mom taille haute\n-\n2\n+\n19,99 EUR");
+  assert.equal(r.items.length, 1);
+  assert.equal(r.items[0].qty, 2);
+  assert.equal(r.items[0].unitPrice, 19.99);
+
+  assert.equal(parseCart("Jean mom\n- 3 +\n19,99 EUR").items[0].qty, 3);
+  assert.equal(parseCart("Jean mom\n\u2212\n4\n\uFF0B\n19,99 EUR").items[0].qty, 4);
+});
+
+test("regression : prix barre sur sa propre ligne, le courant l emporte", () => {
+  const r = parseCart("Jean mom taille haute\n29,99 EUR\n19,99 EUR");
+  assert.equal(r.items.length, 1);
+  assert.equal(r.items[0].unitPrice, 19.99, "le prix barre ne doit pas etre retenu");
+});
+
+test("regression : montants en dollars lus et signales, pas confondus", () => {
+  // "US $19.99" laisse le fragment "US" : il ne doit pas ouvrir un article,
+  // sinon le prix se rattache a ce fragment, jete, et disparait.
+  const r = parseCart("Wireless Earbuds TWS\nUS $19.99\nx 1\nUSB Cable 2m\nUS $2.30\nx 3");
+  assert.equal(r.items.length, 2);
+  assert.equal(r.items[0].unitPrice, 19.99);
+  assert.equal(r.items[1].unitPrice, 2.3);
+  assert.deepEqual(r.currencies, ["USD"]);
+  assert.equal(r.foreignCurrency, true, "une devise etrangere doit etre signalee");
+
+  const eur = parseCart("T-shirt coton\n5,99 EUR");
+  assert.equal(eur.foreignCurrency, false);
+});
+
+test("regression : un fragment court n ouvre pas d article, un libelle si", () => {
+  // Les deux regles partagent le meme seuil, sinon elles se contredisent.
+  assert.equal(parseCart("Earbuds TWS\nUS $19.99").items.length, 1);
+  assert.equal(parseCart("Coque transparente\nJean mom delave  19,99 EUR").items.length, 2);
+});

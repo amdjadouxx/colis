@@ -51,6 +51,24 @@ const CASES = [
     reject: [],
     why: "page de confirmation, tableau d'articles",
   },
+  {
+    page: "temu-fr.html",
+    expect: ["coque", "accessoirecheveux", "led"],
+    reject: ["bougie", "mug", "tapis", "planteartificielle", "serviette"],
+    why: "bloc 'Recommande pour vous' a ecarter, bandeau promotionnel en tete",
+  },
+  {
+    page: "aliexpress-en.html",
+    expect: ["ecouteurs", "cable", "panierrangement"],
+    reject: ["batterie", "protection", "support", "led"],
+    why: "titres anglais, prix en dollars, prix barre avant le prix courant",
+  },
+  {
+    page: "stepper-hard.html",
+    expect: ["pantalon", "pull", "bijoufantaisie"],
+    reject: [],
+    why: "quantite rendue par un selecteur -/2/+ et non par un marqueur textuel",
+  },
 ];
 
 async function findChrome() {

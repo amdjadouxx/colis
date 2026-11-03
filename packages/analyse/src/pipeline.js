@@ -60,6 +60,11 @@ export function analyseCart(blob, options = {}) {
     ...result,
     lines,
     unrecognised,
+    // Vrai si un montant lu n'est pas en euros. Le seuil de 150 EUR et les
+    // taux de surcout ne peuvent pas etre affirmes sans conversion, donc on
+    // le signale au lieu de confondre dollars et euros.
+    foreignCurrency: parsed.foreignCurrency,
+    currencies: parsed.currencies,
     // Une valeur manquante biaise les taux de surcout : il faut le dire plutot
     // que de presenter un pourcentage calcule sur un panier incomplet.
     coverage: {

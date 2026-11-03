@@ -177,6 +177,12 @@ function render() {
         (c.certain ? " : factures une fois." : " : d'ou la fourchette.") + "</div>"
     );
   }
+  if (r.foreignCurrency) {
+    notes.push(
+      '<div class="note bad">Montants lus en ' + esc(r.currencies.join(", ")) +
+        ", pas en euros. Aucune conversion n'est faite, donc les taux de surcout et le seuil de 150 EUR ne sont pas fiables ici.</div>"
+    );
+  }
   if (r.coverage.missingPrices > 0) {
     notes.push(
       '<div class="note">' + r.coverage.missingPrices +

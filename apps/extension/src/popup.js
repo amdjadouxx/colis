@@ -70,6 +70,11 @@ function render(picked) {
       r.removable.map((x) => `${esc(x.label)} (${eur(x.value)}, ${pct(x.ratio)})`).join(", ") +
       `. Les retirer supprime ${eur(r.perCategory)} chacun.</div>`;
   }
+  if (r.foreignCurrency) {
+    html +=
+      `<div class="note bad">Montants en ${esc(r.currencies.join(", "))}, pas en euros. ` +
+      `Aucune conversion : taux et seuil de 150 EUR non fiables ici.</div>`;
+  }
   if (r.unrecognised.length) {
     html +=
       `<div class="note"><b>${r.unrecognised.length} ligne(s) non reconnue(s)</b>, donc non comptee(s). ` +
