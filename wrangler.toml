@@ -1,0 +1,13 @@
+name = "colis-api"
+main = "apps/api/src/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Palier gratuit : 100 000 requetes par jour. Aucune base, aucun binding,
+# aucune cle : l estimation est un calcul local synchrone.
+
+[observability]
+enabled = true
+
+[[routes]]
+pattern = "colis-api.workers.dev/*"

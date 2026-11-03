@@ -1,0 +1,158 @@
+{
+  "note": "Paniers de test. Les libelles imitent les titres reels des places de marche : redondants, bourres de mots-cles, sans composition ni matiere. C'est volontaire : la resolution doit etre eprouvee sur du bruit, pas sur des libelles propres.",
+  "carts": [
+    {
+      "id": "shein-haul-mode",
+      "label": "Haul mode Shein, profil classique",
+      "goodsValue": 62,
+      "lines": [
+        "Lot de 3 t-shirts basiques col rond manches courtes femme ete",
+        "Sweat a capuche oversize imprime streetwear unisexe",
+        "Jean mom taille haute delave bleu clair",
+        "Robe longue fleurie bretelles fines boheme vacances",
+        "Chaussettes fantaisie lot de 5 paires motifs varies",
+        "Soutien-gorge sans armature coque fine confort",
+        "Sac a main bandouliere matelasse chaine doree"
+      ]
+    },
+    {
+      "id": "shein-haul-une-categorie",
+      "label": "Achat groupe volontaire, un seul type d'article",
+      "goodsValue": 34,
+      "lines": [
+        "T-shirt blanc coton col rond",
+        "T-shirt noir coton col rond",
+        "T-shirt gris chine coton col rond",
+        "T-shirt beige coton col rond",
+        "Tee shirt bleu marine basique",
+        "Debardeur blanc cotele"
+      ]
+    },
+    {
+      "id": "temu-gadgets",
+      "label": "Panier Temu accessoires et gadgets",
+      "goodsValue": 27,
+      "lines": [
+        "Coque de telephone transparente antichoc silicone",
+        "Verre trempe protection ecran lot de 2",
+        "Support telephone voiture grille aeration magnetique",
+        "Cable USB C charge rapide tresse 2 metres",
+        "Chargeur secteur double port 20W",
+        "Batterie externe 10000mAh affichage LED",
+        "Ruban LED RGB 5m telecommande bluetooth"
+      ]
+    },
+    {
+      "id": "temu-maison",
+      "label": "Panier Temu maison et deco",
+      "goodsValue": 48,
+      "lines": [
+        "Boite de rangement plastique empilable avec couvercle",
+        "Plaid polaire doux 150x200 canape",
+        "Housse de couette 220x240 microfibre imprimee",
+        "Lot de 4 mugs ceramique scandinave",
+        "Bougie parfumee vanille pot verre",
+        "Plante artificielle monstera pot inclus",
+        "Spatule silicone resistant chaleur lot de 3",
+        "Tapis de bain antiderapant microfibre"
+      ]
+    },
+    {
+      "id": "beaute-mix",
+      "label": "Panier beaute, le cas que la presse compte mal",
+      "goodsValue": 41,
+      "lines": [
+        "Rouge a levres mat longue tenue nude",
+        "Gloss repulpeur transparent brillant",
+        "Mascara volume waterproof noir intense",
+        "Palette fard a paupieres 12 couleurs nude",
+        "Fond de teint fluide couvrance moyenne",
+        "Vernis a ongles gel semi permanent rose",
+        "Lot de 12 pinceaux maquillage professionnels",
+        "Faux cils magnetiques reutilisables avec eyeliner"
+      ]
+    },
+    {
+      "id": "aliexpress-tech",
+      "label": "Panier AliExpress electronique",
+      "goodsValue": 96,
+      "lines": [
+        "Ecouteurs bluetooth sans fil TWS reduction de bruit",
+        "Enceinte bluetooth portable waterproof basses",
+        "Clavier mecanique 60% switches rouges RGB",
+        "Souris gaming sans fil 16000 DPI",
+        "Cle USB 128 Go USB 3.0 metal",
+        "Carte microSD 256 Go classe 10"
+      ]
+    },
+    {
+      "id": "panier-mono-article",
+      "label": "Achat unique, un seul article",
+      "goodsValue": 9,
+      "lines": ["Coque de telephone silicone mate noire"]
+    },
+    {
+      "id": "panier-deux-articles-colliscion",
+      "label": "Deux articles qui peuvent fusionner, ou non",
+      "goodsValue": 14,
+      "lines": [
+        "Coque de telephone souple transparente",
+        "Support telephone bureau reglable"
+      ]
+    },
+    {
+      "id": "enfants",
+      "label": "Panier enfants et jouets",
+      "goodsValue": 55,
+      "lines": [
+        "Peluche lapin doux 30cm cadeau bebe",
+        "Puzzle 1000 pieces paysage montagne",
+        "Figurines animaux lot de 12 educatif",
+        "Jeu de cartes famille 54 cartes plastifiees",
+        "Body bebe coton bio lot de 5 manches longues",
+        "Tapis de yoga antiderapant 6mm sangle"
+      ]
+    },
+    {
+      "id": "panier-dispersé",
+      "label": "Panier maximalement disperse, pire cas",
+      "goodsValue": 88,
+      "lines": [
+        "T-shirt imprime homme",
+        "Baskets running respirantes semelle epaisse",
+        "Lunettes de soleil polarisees UV400",
+        "Montre connectee ecran AMOLED podometre",
+        "Parfum femme floral 50ml vaporisateur",
+        "Parapluie pliant automatique coupe-vent",
+        "Tournevis de precision kit 25 embouts",
+        "Ballon de football taille 5 cousu main",
+        "Bougie parfumee lavande",
+        "Ceinture cuir reversible boucle automatique"
+      ]
+    },
+    {
+      "id": "panier-chaussures",
+      "label": "Plusieurs paires de chaussures",
+      "goodsValue": 73,
+      "lines": [
+        "Baskets blanches tendance femme semelle plateforme",
+        "Sneakers montantes toile unisexe",
+        "Sandales plates ete lanieres tressees",
+        "Chaussons polaire interieur antiderapant",
+        "Bottines a talon carre cuir synthetique"
+      ]
+    },
+    {
+      "id": "panier-inconnu",
+      "label": "Articles hors catalogue, test de la couverture",
+      "goodsValue": 52,
+      "lines": [
+        "Humidificateur d air ultrasonique 300ml USB",
+        "Aspirateur de bureau mini sans fil",
+        "Distributeur automatique de croquettes chat",
+        "Machine a coudre portable mini electrique",
+        "T-shirt coton homme col V"
+      ]
+    }
+  ]
+}

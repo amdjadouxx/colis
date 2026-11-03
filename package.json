@@ -1,0 +1,25 @@
+{
+  "name": "colis",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Moteur de calcul des frais douaniers par categorie tarifaire pour les colis hors UE, et le site qui l'expose.",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "test": "node --test packages/*/test/*.test.js",
+    "sync:taric": "node tools/taric-sync/sync.js",
+    "watch:rules": "node tools/rules-watch/watch.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.42.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
