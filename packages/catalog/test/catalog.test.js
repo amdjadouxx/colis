@@ -171,14 +171,14 @@ test("conformite aux exemples publies par la douane", () => {
 });
 
 test("pas de faux positif sur des mots trop generiques", () => {
-  // Trouves sur un vrai panier AliExpress : "Mirror Link" d un autoradio
-  // etait classe en miroir, et "Podofo Flagship Store" en rideau, parce que
-  // "store" designe un rideau en francais. Un synonyme d un seul mot courant
-  // pollue tous les paniers ou ce mot apparait.
+  // Trouves sur un vrai panier : "Mirror Link", une fonction d autoradio,
+  // etait classee en miroir, et un nom de boutique finissant par "Store" en
+  // rideau, parce que "store" designe un rideau en francais. Un synonyme d un
+  // seul mot courant pollue tous les paniers ou ce mot apparait.
   const cas = [
-    ["Autoradio 2Din 9,7 pouces Carplay Android Auto Mirror Link GPS USB BT", "miroir"],
-    ["Podofo Oversea Flagship Store", "rideau"],
-    ["DOCO LAB Store", "rideau"],
+    ["Autoradio 2Din Carplay Android Auto Mirror Link GPS USB", "miroir"],
+    ["Oversea Flagship Store", "rideau"],
+    ["Official Brand Store", "rideau"],
   ];
   for (const [titre, interdit] of cas) {
     const ids = resolveText(titre).matches.map((m) => m.id);

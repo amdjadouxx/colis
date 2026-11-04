@@ -1,6 +1,16 @@
 # colis
 
+[![ci](https://github.com/amdjadouxx/colis/actions/workflows/ci.yml/badge.svg)](https://github.com/amdjadouxx/colis/actions/workflows/ci.yml)
+[![licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+
 Moteur de calcul des frais douaniers **par catégorie tarifaire** pour les envois hors UE vers la France, et le site qui l'expose.
+
+> **Estimation, pas un classement douanier officiel.**
+> Les sous-positions utilisées sont les classements usuels de ces articles. Seule l'administration des douanes est compétente pour trancher. Les montants réellement dus dépendent du classement retenu au dédouanement, de la valeur déclarée et des conditions de vente.
+> Ne sont pas calculés : la TVA à l'importation sur la marchandise, les droits de droit commun au-delà de 150 €, et les frais facturés par les transporteurs.
+> Les redevables sont la plateforme, le vendeur ou le transporteur — **l'administration des douanes ne s'adresse jamais aux particuliers** pour leur paiement.
+
+**État : fonctionnel en local, non déployé.** `npm run check:deploy` liste ce qui reste ouvert. Les marques éventuellement citées le sont à titre descriptif ; ce projet n'est affilié à aucune place de marché.
 
 Depuis le 1ᵉʳ juillet 2026 un droit forfaitaire de 3 € s'applique par catégorie d'article (envois ≤ 150 €), et depuis le 1ᵉʳ novembre 2026 s'y ajoutent 2 € de frais de traitement, sans seuil de valeur. Le coût d'une commande ne dépend donc pas du nombre d'articles mais du **nombre de sous-positions tarifaires distinctes** qu'elle contient.
 
@@ -84,3 +94,23 @@ Contexte chiffré pour calibrer les attentes : entre juin et juillet 2026, les v
 Les sous-positions du catalogue sont les classements usuels de ces articles, **pas un classement officiel** : seule la douane tranche. Le redevable légal est la plateforme, le vendeur ou le transporteur — la douane ne s'adresse jamais aux particuliers pour ces sommes. Ne sont pas calculés : la TVA à l'importation sur la marchandise, les droits de droit commun au-delà de 150 €, et les frais de dossier des transporteurs, qui sont libres et non réglementés.
 
 Sources : [douane.gouv.fr](https://www.douane.gouv.fr/petits-colis-ce-qui-change-pour-vos-achats-en-ligne) · [economie.gouv.fr](https://www.economie.gouv.fr/particuliers/mes-droits-conso/bien-consommer/tout-savoir-sur-la-taxe-sur-les-petits-colis) · [TARIC open data mirror](https://github.com/rousseauxy/taric-opendata)
+
+## Garanties de qualité
+
+Le projet ne se contente pas de tests qui passent.
+
+| Contrôle | Commande | Ce qu'il garantit |
+|---|---|---|
+| Suite unitaire et d'invariants | `npm test` | moteur, parseur, barèmes, catalogue, absence de réseau |
+| Contrôles négatifs | `npm run check:negative` | les bugs connus font bien **rougir** la suite, vérifié sur copie |
+| Équivalence du bundle | `npm run verify:local` | la page livrée calcule comme les sources |
+| Extraction en navigateur | `npm run test:extension` | le script réellement injecté lit la bonne zone |
+| Garde-fou de mise en ligne | `npm run check:deploy` | ce qui reste ouvert avant publication |
+
+Les contrôles négatifs réintroduisent douze bugs connus sur une copie du dépôt et vérifient que la suite échoue à chaque fois. Un test qui passe ne prouve rien s'il passe aussi quand le code est cassé.
+
+Le fuzz par invariants génère des paniers au format aléatoire et vérifie des propriétés qui doivent tenir quel que soit le format : conservation du nombre d'articles, de la valeur totale, absence de prix inventé.
+
+## Licence
+
+MIT, voir [LICENSE](LICENSE). Le logiciel est fourni « tel quel », sans garantie d'aucune sorte.
