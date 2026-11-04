@@ -2,7 +2,7 @@
   "name": "@colis/rules",
   "version": "0.1.0",
   "description": "Baremes des frais d importation applicables aux envois de vente a distance, versionnes et dates.",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "private": true,
   "main": "src/index.js",

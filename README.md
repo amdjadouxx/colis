@@ -1,7 +1,7 @@
 # colis
 
 [![ci](https://github.com/amdjadouxx/colis/actions/workflows/ci.yml/badge.svg)](https://github.com/amdjadouxx/colis/actions/workflows/ci.yml)
-[![licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+[![licence AGPL v3](https://img.shields.io/badge/licence-AGPL--3.0-blue.svg)](LICENSE)
 
 Moteur de calcul des frais douaniers **par catégorie tarifaire** pour les envois hors UE vers la France, et le site qui l'expose.
 
@@ -120,4 +120,10 @@ Le fuzz par invariants génère des paniers au format aléatoire et vérifie des
 
 ## Licence
 
-MIT, voir [LICENSE](LICENSE). Le logiciel est fourni « tel quel », sans garantie d'aucune sorte.
+**GNU AGPL v3**, voir [LICENSE](LICENSE).
+
+Ce code est libre : tu peux l'utiliser, le modifier et le redistribuer. En contrepartie, toute version modifiée doit rester sous la même licence — **y compris si elle est exploitée comme service en ligne**, sans être distribuée. C'est la différence entre l'AGPL et la GPL, et c'est la raison de ce choix : le moteur ne peut pas être repris dans un service fermé.
+
+Le logiciel est fourni « tel quel », **sans garantie d'aucune sorte**. Voir aussi l'avertissement en tête de ce fichier sur la nature des estimations.
+
+**Obligation en cas de déploiement.** L'article 13 de l'AGPL impose d'offrir le code source aux personnes qui interagissent avec le logiciel à distance, à travers un réseau. La page et l'extension s'exécutent entièrement dans le navigateur, donc le code est déjà entre les mains de l'utilisateur. En revanche, le jour où `apps/api` serait déployé comme service, un lien visible vers ce dépôt devient obligatoire.

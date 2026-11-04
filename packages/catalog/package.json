@@ -2,7 +2,7 @@
   "name": "@colis/catalog",
   "version": "0.1.0",
   "description": "Catalogue d articles, synonymes multilingues et resolution d un libelle produit vers ses sous-positions candidates.",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "private": true,
   "main": "src/index.js",
