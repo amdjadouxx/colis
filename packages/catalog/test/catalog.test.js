@@ -169,3 +169,31 @@ test("conformite aux exemples publies par la douane", () => {
   const tva = estimate({ categories: { min: 1, max: 1 }, goodsValue: 20, includeVat: true });
   assert.equal(tva.lines.find((l) => l.id === "droit-forfaitaire").perCategory, 3.6);
 });
+
+test("pas de faux positif sur des mots trop generiques", () => {
+  // Trouves sur un vrai panier AliExpress : "Mirror Link" d un autoradio
+  // etait classe en miroir, et "Podofo Flagship Store" en rideau, parce que
+  // "store" designe un rideau en francais. Un synonyme d un seul mot courant
+  // pollue tous les paniers ou ce mot apparait.
+  const cas = [
+    ["Autoradio 2Din 9,7 pouces Carplay Android Auto Mirror Link GPS USB BT", "miroir"],
+    ["Podofo Oversea Flagship Store", "rideau"],
+    ["DOCO LAB Store", "rideau"],
+  ];
+  for (const [titre, interdit] of cas) {
+    const ids = resolveText(titre).matches.map((m) => m.id);
+    assert.ok(!ids.includes(interdit), `"${titre}" ne doit pas resoudre vers ${interdit}, trouve : ${ids.join(", ")}`);
+  }
+});
+
+test("la valeur marchandise ne compte que les lignes reconnues", async () => {
+  // Sur le vrai panier, le total brut du parseur annoncait 429 EUR pour
+  // 141 EUR de marchandise : economies, coupons et sous-total etaient
+  // additionnes, ce qui divisait par trois les taux de surcout.
+  const { analyseCart } = await import("../../analyse/src/pipeline.js");
+  const r = analyseCart(
+    "Seche-cheveux haute vitesse\n51,99€\nLivraison gratuite\n1,99€\nSous-total\n51,99€"
+  );
+  assert.equal(r.ok, true);
+  assert.equal(r.goodsValue, 51.99, "seules les lignes reconnues comptent");
+});

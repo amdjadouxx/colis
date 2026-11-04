@@ -41,6 +41,20 @@ const CURRENCY = { "€": "EUR", EUR: "EUR", $: "USD", USD: "USD", "£": "GBP", 
 const ATTRIBUTE =
   /^(?:taille|size|couleur|color|colour|mod[eè]le|model|variante|variant|style|ref|r[eé]f[eé]rence|sku|vendu\s+par|sold\s+by|exp[eé]di[eé]|livr|garantie|stock|en\s+stock)\b/i;
 
+/**
+ * Ligne de variante, telle que les places de marche l'affichent sous le
+ * libelle : "2GB 32GB/Allemagne", "Ivoire/EU", "Noir/XL".
+ *
+ * Constate sur un vrai panier AliExpress : cette ligne, glissee entre le
+ * libelle et le prix, ouvrait un faux article. Le vrai libelle partait donc
+ * sans prix, et le prix se rattachait a la variante, que le catalogue ne
+ * reconnait pas. Resultat : un panier rempli etait lu comme sans prix.
+ *
+ * Deux signaux conjoints, peu de mots ET une barre oblique, pour ne pas
+ * ecarter un libelle qui contiendrait une barre.
+ */
+const VARIANTE = (line) => line.includes("/") && line.trim().split(/\s+/).length <= 5;
+
 /** Quantite : "x2", "2x", "Qte : 2", "Quantity: 2", "Qty 2". */
 const QTY = [
   /(?:^|\s)x\s*(\d{1,3})(?:\s|$)/i,
@@ -245,7 +259,7 @@ export function parseCart(blob) {
     // donc il ouvre bien un article, sinon deux produits dont le premier n'a
     // pas de prix se retrouvent concatenes.
     const opensNewItem =
-      looksLikeTitle(text) && qty === null && !ATTRIBUTE.test(line) && buffer.length > 0;
+      looksLikeTitle(text) && qty === null && !ATTRIBUTE.test(line) && !VARIANTE(line) && buffer.length > 0;
     if (opensNewItem) flush(null);
 
     // Prix seul alors qu'aucun libelle n'attend : c'est le second montant

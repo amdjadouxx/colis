@@ -66,7 +66,16 @@ export function analyseCart(blob, options = {}) {
 
   const result = analyse({
     lines,
-    goodsValue: options.goodsValue ?? (parsed.totalValue ?? undefined),
+    // Valeur des seules lignes RECONNUES, et non le total brut du parseur.
+    // Une page de panier porte des montants qui ne sont pas des articles :
+    // economies, sous-total, coupons. Sur un vrai panier AliExpress, le total
+    // brut annoncait 429 EUR de marchandise pour 141 EUR reels, ce qui
+    // divisait par trois les taux de surcout affiches.
+    goodsValue:
+      options.goodsValue ??
+      (lines.some((l) => l.value > 0)
+        ? Math.round(lines.reduce((s, l) => s + l.value, 0) * 100) / 100
+        : undefined),
     includeVat: options.includeVat,
     onDate: options.onDate,
   });

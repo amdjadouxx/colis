@@ -86,6 +86,38 @@ function inRecoSection(el) {
   return false;
 }
 
+/**
+ * Recolle les montants que la page a eclates caractere par caractere.
+ *
+ * AliExpress rend "89,46€" en six elements distincts, un par caractere, ce
+ * qui donne six lignes apres extraction et detruit le prix. Constate sur un
+ * vrai panier : aucune de mes pages de test n'aurait produit ca.
+ *
+ * On ne recolle que des suites d'au moins trois lignes tres courtes composees
+ * uniquement de chiffres, de separateurs decimaux ou d'un symbole monetaire.
+ * Le seuil de trois evite d'agglomerer des lignes courtes legitimes.
+ *
+ * @param {string} text
+ */
+function recomposeMontants(text) {
+  const lignes = text.split("\n");
+  const sortie = [];
+  let i = 0;
+  const morceau = (l) => l.length <= 2 && /^[\d.,  ]*[\d.,]$|^[€$£]$/.test(l.trim());
+  while (i < lignes.length) {
+    let j = i;
+    while (j < lignes.length && morceau(lignes[j])) j++;
+    if (j - i >= 3) {
+      sortie.push(lignes.slice(i, j).map((l) => l.trim()).join(""));
+      i = j;
+    } else {
+      sortie.push(lignes[i]);
+      i++;
+    }
+  }
+  return sortie.join("\n");
+}
+
 const count = (text, re) => {
   re.lastIndex = 0;
   return (text.match(re) || []).length;
@@ -98,7 +130,10 @@ const count = (text, re) => {
  * @param {Element} el
  */
 function measure(el) {
-  const text = textOf(el);
+  // Les montants sont recolles AVANT de compter les prix : sinon un bloc dont
+  // la page eclate les chiffres paraitrait n'en contenir aucun, et ne serait
+  // meme pas retenu comme candidat.
+  const text = recomposeMontants(textOf(el));
   if (text.length < 20 || text.length > 20000) return null;
 
   const prices = count(text, PRICE_RE);
