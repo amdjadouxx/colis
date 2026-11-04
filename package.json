@@ -22,7 +22,8 @@
     "test:concept": "node tools/concept-test/run.js",
     "test:extension": "node tools/extension-test/run.js",
     "check": "npm test && npm run check:negative && npm run build:local && npm run verify:local && npm run test:extension",
-    "serve:test": "node tools/serve-test/server.js"
+    "serve:test": "node tools/serve-test/server.js",
+    "check:deploy": "node tools/deploy-gate/check.js"
   },
   "devDependencies": {
     "wrangler": "4.42.0"

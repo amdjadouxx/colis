@@ -93,6 +93,13 @@ if (!page.includes("function analyseCart")) {
 }
 await writeFile(join(OUT_DIR, "index.html"), page, "utf8");
 
+// Page de mentions legales. Elle part avec le site des le premier
+// deploiement : l'obligation de l'article 1-1 de la LCEN ne souffre pas
+// d'etre remise a plus tard, et les champs non remplis se voient.
+const legal = await read("tools/build-local/template-legal.html");
+await writeFile(join(OUT_DIR, "legal.html"), legal, "utf8");
+const aRemplir = (legal.match(/__[A-Z_]+__/g) || []).length;
+
 // Extension : meme moteur, plus le lecteur de panier transforme en script
 // injectable. Un script injecte par `files` rend la valeur de sa derniere
 // expression, d'ou l'enveloppe en expression de fonction immediatement
@@ -117,4 +124,8 @@ await writeFile(join(EXT_SRC, "engine.bundle.js"), bundle, "utf8");
 console.log(`Bundle  : apps/web/engine.bundle.js (${(bundle.length / 1024).toFixed(0)} Ko)`);
 console.log(`Extension : apps/extension/src/{injected,engine.bundle}.js`);
 console.log(`Page    : apps/web/index.html (${(page.length / 1024).toFixed(0)} Ko, autonome)`);
+console.log(
+  `Legal   : apps/web/legal.html` +
+    (aRemplir > 0 ? `  —  ${aRemplir} champ(s) a remplir avant mise en ligne` : "")
+);
 console.log(`Modules : ${MODULES.length}  |  donnees inlinees : ${Object.keys(DATA).length}`);

@@ -116,3 +116,4 @@ test("l'extension ne declare ni hote ni permission large", () => {
   );
   assert.equal(manifest.content_scripts, undefined, "pas de script injecte en permanence");
 });
+
