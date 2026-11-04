@@ -1,0 +1,10 @@
+# Normalise les fins de ligne dans le depot : LF partout, quelle que soit la
+# plateforme de travail. Sans cette regle, un depot alimente depuis Windows
+# enregistre des CRLF et chaque commit affiche des differences fantomes.
+* text=auto eol=lf
+
+# Fichiers binaires : aucune conversion.
+*.png binary
+*.jpg binary
+*.zip binary
+*.parquet binary
