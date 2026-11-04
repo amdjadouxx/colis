@@ -8,7 +8,7 @@ Contrôle : pour chaque brique, écrire la sonde qui la réfuterait, la lancer, 
 
 ## Juridique
 
-Traite en detail dans [LEGAL.md](LEGAL.md), qui liste ce qui est verifie, ce qui est raisonne et ce qui reste ouvert.
+Traite en detail dans [juridique.md](juridique.md), qui liste ce qui est verifie, ce qui est raisonne et ce qui reste ouvert.
 
 Trois actions bloquantes avant toute mise en ligne : mentions legales (LCEN art. 1-1), relecture de la clause de non-responsabilite par un juriste, lecture des CGU des trois plateformes.
 

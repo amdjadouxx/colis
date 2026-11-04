@@ -112,7 +112,7 @@ test("pipeline : une page sans prix n est pas annoncee comme un panier", () => {
   // porte des prix.
   const r = analyseCart("Chaussettes homme\nJouets enfants\nAide Service client\nRetour a l accueil");
   assert.equal(r.ok, false);
-  assert.match(r.reason, /Aucun panier detecte/);
+  assert.match(r.reason, /Aucun panier d[ée]tect[ée]/);
 });
 
 test("pipeline : un seul prix suffit a reconnaitre un panier", () => {

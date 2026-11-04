@@ -21,13 +21,15 @@
     "probe:coverage": "node tools/coverage-probe/probe.js",
     "test:concept": "node tools/concept-test/run.js",
     "test:extension": "node tools/extension-test/run.js",
-    "check": "npm test && npm run typecheck && npm run check:negative && npm run verify:local && npm run test:extension",
+    "check": "npm run lint && npm test && npm run typecheck && npm run check:negative && npm run verify:local && npm run test:extension",
     "serve:test": "node tools/serve-test/server.js",
     "check:deploy": "node tools/deploy-gate/check.js",
-    "typecheck": "npm run build:local --silent && tsc --noEmit"
+    "typecheck": "npm run build:local --silent && tsc --noEmit",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
+    "eslint": "^9.15.0",
     "typescript": "^5.6.3",
     "wrangler": "4.42.0"
   },

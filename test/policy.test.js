@@ -2,7 +2,7 @@
  * Garde-fou : le moteur et l'extension ne doivent appeler aucun reseau.
  *
  * Ce n'est pas une preference de style, c'est ce qui fait tenir tout le
- * paragraphe RGPD de LEGAL.md. Un panier colle peut contenir un nom, une
+ * paragraphe RGPD de docs/juridique.md. Un panier colle peut contenir un nom, une
  * adresse, un numero de commande. Tant que rien ne sort de la machine,
  * l'editeur ne traite aucune donnee personnelle : pas de base legale a
  * fournir, pas de duree de conservation, pas de bandeau.
@@ -12,7 +12,7 @@
  *
  * Les outils de tools/ sont exclus : taric-sync et rules-watch appellent le
  * reseau par construction, hors du chemin utilisateur et sans aucune donnee
- * de panier. apps/api est exclu aussi : c'est un serveur, et LEGAL.md dit
+ * de panier. apps/api est exclu aussi : c'est un serveur, et docs/juridique.md dit
  * explicitement que le deployer ferait tomber ce raisonnement.
  */
 
@@ -51,7 +51,7 @@ const FORBIDDEN = [
 
 /**
  * Stockage navigateur : pas un appel reseau, mais une persistance par
- * visiteur que LEGAL.md ne couvre pas. Interdit tant que ce n'est pas decide.
+ * visiteur que docs/juridique.md ne couvre pas. Interdit tant que ce n'est pas decide.
  */
 /** @type {[RegExp, string][]} */
 const STORAGE = [
@@ -95,7 +95,7 @@ test("aucun appel reseau dans le moteur ni dans l'extension", () => {
   assert.deepEqual(
     found,
     [],
-    `Sortie reseau detectee. Elle fait tomber le raisonnement RGPD de LEGAL.md :\n  ${found.join("\n  ")}`
+    `Sortie reseau detectee. Elle fait tomber le raisonnement RGPD de docs/juridique.md :\n  ${found.join("\n  ")}`
   );
 });
 

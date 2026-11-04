@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Essai local — frais par categorie</title>
+<title>Essai local — frais par catégorie</title>
 <style>
 :root{
   --bg:#f3f4f7;--surface:#fff;--surface-2:#fafbfd;--fg:#15171d;--muted:#5b6170;
@@ -36,9 +36,9 @@ button.ghost{background:transparent;color:var(--accent)}
 .big{font-size:30px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .big small{font-size:14px;font-weight:600;color:var(--muted)}
 .sub{color:var(--cost);font-weight:700;font-size:18px;margin-top:6px;font-variant-numeric:tabular-nums}
-/* Le tableau est le seul element qui peut depasser la largeur du telephone :
+/* Le tableau est le seul element qui peut depasser la largeur du téléphone :
    il defile dans son propre conteneur, pour que la page elle-meme ne scrolle
-   jamais lateralement. Defaut vu a 400 px, colonne Surcout coupee. */
+   jamais lateralement. Defaut vu a 400 px, colonne Surcoût coupee. */
 .tablewrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:340px}
 th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
@@ -64,7 +64,7 @@ footer b{color:var(--fg)}
 <div class="wrap">
   <h1>Essai local</h1>
   <p class="lead"><b>Estimation. Pas un classement douanier officiel : seule la douane tranche.</b><br>
-    Colle un panier ou un email de commande. Rien n'est envoye : tout le calcul se fait dans cette page.</p>
+    Colle un panier ou un email de commande. Rien n'est envoyé : tout le calcul se fait dans cette page.</p>
 
   <div class="grid">
     <div>
@@ -81,11 +81,11 @@ footer b{color:var(--fg)}
   </div>
 
   <footer>
-    Redevable legal : la plateforme, le vendeur ou le transporteur. <b>La douane ne s'adresse jamais
-    aux particuliers</b> pour ces sommes. Un SMS reclamant 2 ou 3 EUR pour liberer un colis est une
-    arnaque. Non calcules : TVA a l'importation sur la marchandise, droits de droit commun au-dela de
+    Redevable légal : la plateforme, le vendeur ou le transporteur. <b>La douane ne s'adresse jamais
+    aux particuliers</b> pour ces sommes. Un SMS reclamant 2 ou 3 EUR pour libérer un colis est une
+    arnaque. Non calculés : TVA à l'importation sur la marchandise, droits de droit commun au-dela de
     150 EUR, frais de dossier des transporteurs.
-    <a href="./legal.html">Mentions legales</a>.
+    <a href="./legal.html">Mentions légales</a>.
     <span id="ver"></span>
   </footer>
 </div>
@@ -94,11 +94,11 @@ footer b{color:var(--fg)}
 /* __ENGINE__ */
 
 const SAMPLE = `Votre commande AB-2291
-Coque de telephone transparente antichoc silicone
-Qte : 2
+Coque de téléphone transparente antichoc silicone
+Qté : 2
 4,99 EUR
 1 x Porte-cles peluche lapin pendentif  1,20 EUR
-Cable USB C charge rapide tresse 2 metres  2,30 EUR
+Câble USB C charge rapide tresse 2 metres  2,30 EUR
 Lot de 3 t-shirts basiques col rond femme
 Taille M
 12,50 EUR
@@ -164,7 +164,7 @@ function render() {
       '<div class="empty">' + esc(r.reason) +
       (picked
         ? '<div class="code" style="margin-top:10px">Zone lue : ' + esc(picked.how) + ", " +
-          picked.length + " caracteres.</div><pre style=\"white-space:pre-wrap;font:10px ui-monospace,Consolas,monospace;max-height:240px;overflow:auto;margin:6px 0 0\">" +
+          picked.length + " caractères.</div><pre style=\"white-space:pre-wrap;font:10px ui-monospace,Consolas,monospace;max-height:240px;overflow:auto;margin:6px 0 0\">" +
           esc(text.slice(0, 1500)) + "</pre>"
         : "") +
       "</div>";
@@ -176,18 +176,18 @@ function render() {
 
   let html =
     '<div class="head"><div class="big">' + cats +
-    ' <small>' + (r.categories.max > 1 ? "categories tarifaires" : "categorie tarifaire") + "</small></div>" +
+    ' <small>' + (r.categories.max > 1 ? "catégories tarifaires" : "catégorie tarifaire") + "</small></div>" +
     '<div class="sub">' + cost + " de frais" +
     (r.overallSurcharge !== null ? " — " + pct(r.overallSurcharge) + " sur " + eur(r.goodsValue) : "") +
     "</div></div>";
 
-  html += "<div class='tablewrap'><table><thead><tr><th>Article</th><th class='n'>Prix</th><th class='n'>Frais</th><th class='n'>Surcout</th></tr></thead><tbody>";
+  html += "<div class='tablewrap'><table><thead><tr><th>Article</th><th class='n'>Prix</th><th class='n'>Frais</th><th class='n'>Surcoût</th></tr></thead><tbody>";
   for (const row of r.rows) {
     const hot = row.surcharge !== null && row.surcharge >= 1;
     html +=
       "<tr><td>" + esc(row.label) +
       '<div class="code' + (row.undetermined ? " ind" : "") + '">SH ' + esc(row.code) +
-      (row.undetermined ? " — code non determine par la fiche produit" : "") +
+      (row.undetermined ? " — code non déterminé par la fiche produit" : "") +
       (row.sharedWith.length ? " — partage avec " + esc(row.sharedWith.join(", ")) : "") +
       "</div></td>" +
       '<td class="n">' + (row.value > 0 ? eur(row.value) : "?") + "</td>" +
@@ -199,7 +199,7 @@ function render() {
   const notes = [];
   if (r.removable.length) {
     notes.push(
-      '<div class="note bad"><b>Les frais depassent le prix de ces articles.</b> ' +
+      '<div class="note bad"><b>Les frais dépassent le prix de ces articles.</b> ' +
         r.removable.map((x) => esc(x.label) + " (" + eur(x.value) + ", " + pct(x.ratio) + ")").join(", ") +
         ". Les retirer supprime " + eur(r.perCategory) + " chacun.</div>"
     );
@@ -208,12 +208,12 @@ function render() {
   if (lineByLine > r.fees.min) {
     notes.push(
       '<div class="note">En une seule commande : <b>' + eur(r.fees.min) + "</b>. En " +
-        r.coverage.recognised + " commandes separees : " + eur(lineByLine) +
+        r.coverage.recognised + " commandes séparées : " + eur(lineByLine) +
         ". Grouper evite " + eur(lineByLine - r.fees.min) + ".</div>"
     );
   } else {
     notes.push(
-      '<div class="note">Grouper ne change rien ici : chaque article tombe dans une categorie differente.</div>'
+      '<div class="note">Grouper ne change rien ici : chaque article tombe dans une catégorie différente.</div>'
     );
   }
   for (const c of r.collisions) {
@@ -240,7 +240,7 @@ function render() {
   if (r.unrecognised.length) {
     html +=
       '<div class="miss"><b>' + r.unrecognised.length +
-      " ligne(s) non reconnue(s)</b>, donc non comptee(s). Le total est sous-estime." +
+      " ligne(s) non reconnue(s)</b>, donc non comptee(s). Le total est sous-estimé." +
       "<ul>" + r.unrecognised.map((u) => "<li>" + esc(u.title.slice(0, 80)) + "</li>").join("") + "</ul></div>";
   }
 

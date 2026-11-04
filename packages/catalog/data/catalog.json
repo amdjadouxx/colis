@@ -3,79 +3,987 @@
   "nomenclature": "HS 2022 / TARIC eu-2026-11",
   "warning": "Les sous-positions listees sont les classements usuels de ces articles, pas un classement officiel. Seule la douane tranche. Un article marque `undetermined` porte plusieurs codes parce que la fiche produit ne contient pas l'information qui departage : l'incertitude est dans la donnee source, pas dans ce fichier.",
   "items": [
-    { "id": "tshirt", "label": "T-shirt, debardeur", "rayon": "Vetements", "codes": ["6109.10", "6109.90"], "undetermined": "fibre : coton ou synthetique", "synonyms": ["tee shirt", "top", "debardeur", "marcel"] },
-    { "id": "pull", "label": "Pull, sweat, hoodie", "rayon": "Vetements", "codes": ["6110.20", "6110.30"], "undetermined": "fibre : coton ou synthetique", "synonyms": ["sweat", "hoodie", "sweatshirt", "gilet", "cardigan"] },
-    { "id": "chemise", "label": "Chemise, chemisier", "rayon": "Vetements", "codes": ["6105.10", "6106.10", "6205.20", "6206.30"], "undetermined": "maille ou tisse, et genre", "synonyms": ["chemisier", "blouse"] },
-    { "id": "robe", "label": "Robe", "rayon": "Vetements", "codes": ["6104.43", "6104.44", "6204.42", "6204.44"], "undetermined": "maille ou tisse, et fibre", "synonyms": ["robe longue", "robe d ete"] },
-    { "id": "jupe", "label": "Jupe", "rayon": "Vetements", "codes": ["6104.53", "6204.52", "6204.59"], "undetermined": "maille ou tisse, et fibre", "synonyms": ["jupe plissee"] },
-    { "id": "pantalon", "label": "Pantalon, jean", "rayon": "Vetements", "codes": ["6103.42", "6104.62", "6203.42", "6204.62"], "undetermined": "maille ou tisse, et genre", "synonyms": ["jean", "denim", "short", "bermuda", "cargo"] },
-    { "id": "legging", "label": "Legging", "rayon": "Vetements", "codes": ["6104.63", "6104.69"], "undetermined": "fibre", "synonyms": ["collant de sport", "jogging"] },
-    { "id": "veste", "label": "Veste, manteau", "rayon": "Vetements", "codes": ["6101.30", "6102.30", "6201.40", "6202.40"], "undetermined": "maille ou tisse, et genre", "synonyms": ["manteau", "doudoune", "blouson", "parka", "trench"] },
-    { "id": "pyjama", "label": "Pyjama, vetement de nuit", "rayon": "Vetements", "codes": ["6107.21", "6108.31", "6108.32"], "undetermined": "genre et fibre", "synonyms": ["nuisette", "peignoir", "robe de chambre"] },
-    { "id": "sousvetement", "label": "Culotte, slip, boxer", "rayon": "Vetements", "codes": ["6107.11", "6108.21", "6108.22"], "undetermined": "genre et fibre", "synonyms": ["slip", "boxer", "string", "lingerie"] },
-    { "id": "soutiengorge", "label": "Soutien-gorge", "rayon": "Vetements", "codes": ["6212.10"], "synonyms": ["brassiere", "bralette"] },
-    { "id": "maillot", "label": "Maillot de bain", "rayon": "Vetements", "codes": ["6112.31", "6112.39", "6112.41", "6112.49"], "undetermined": "genre et fibre", "synonyms": ["bikini", "short de bain"] },
-    { "id": "chaussettes", "label": "Chaussettes, collants", "rayon": "Vetements", "codes": ["6115.95", "6115.96"], "undetermined": "fibre", "synonyms": ["collant", "bas", "socquettes"] },
-    { "id": "bonnet", "label": "Bonnet, casquette, chapeau", "rayon": "Vetements", "codes": ["6505.00"], "synonyms": ["casquette", "chapeau", "beanie", "bob"] },
-    { "id": "echarpe", "label": "Echarpe, foulard", "rayon": "Vetements", "codes": ["6214.10", "6214.20", "6214.30"], "undetermined": "matiere : soie, laine ou synthetique", "synonyms": ["foulard", "chale", "snood"] },
-    { "id": "gants", "label": "Gants", "rayon": "Vetements", "codes": ["6116.93", "6116.99", "4203.29"], "undetermined": "maille ou cuir", "synonyms": ["moufles"] },
-    { "id": "ceinture", "label": "Ceinture", "rayon": "Vetements", "codes": ["4203.30", "3926.20", "6217.10"], "undetermined": "cuir, plastique ou textile", "synonyms": [] },
-
-    { "id": "baskets", "label": "Baskets, sneakers", "rayon": "Chaussures", "codes": ["6403.99", "6404.11"], "undetermined": "dessus cuir ou textile", "synonyms": ["sneakers", "tennis", "chaussures de sport", "running"] },
-    { "id": "bottes", "label": "Bottes, bottines", "rayon": "Chaussures", "codes": ["6402.91", "6403.91"], "undetermined": "dessus cuir, plastique ou caoutchouc", "synonyms": ["bottines", "boots"] },
-    { "id": "sandales", "label": "Sandales, tongs", "rayon": "Chaussures", "codes": ["6402.20", "6402.99", "6404.19"], "undetermined": "dessus plastique ou textile", "synonyms": ["tongs", "claquettes", "mules", "escarpins"] },
-    { "id": "chaussons", "label": "Chaussons", "rayon": "Chaussures", "codes": ["6405.20", "6405.90"], "undetermined": "dessus textile ou autre", "synonyms": ["pantoufles", "charentaises"] },
-
-    { "id": "sac", "label": "Sac a main, sac a dos", "rayon": "Sacs, bijoux, accessoires", "codes": ["4202.21", "4202.22", "4202.91", "4202.92"], "undetermined": "cuir, textile ou plastique", "synonyms": ["sac a dos", "pochette", "tote bag", "besace"] },
-    { "id": "portefeuille", "label": "Portefeuille, porte-cartes", "rayon": "Sacs, bijoux, accessoires", "codes": ["4202.31", "4202.32", "4202.39"], "undetermined": "cuir, textile ou plastique", "synonyms": ["porte-monnaie", "porte-cartes"] },
-    { "id": "valise", "label": "Valise, bagage", "rayon": "Sacs, bijoux, accessoires", "codes": ["4202.11", "4202.12", "4202.19"], "undetermined": "cuir, textile ou plastique", "synonyms": ["bagage", "trolley"] },
-    { "id": "bijoufantaisie", "label": "Bijou fantaisie", "rayon": "Sacs, bijoux, accessoires", "codes": ["7117.19", "7117.90"], "undetermined": "metal commun ou autre matiere", "synonyms": ["collier", "bracelet", "boucles d oreilles", "bague", "pendentif"] },
-    { "id": "bijouprecieux", "label": "Bijou en argent ou en or", "rayon": "Sacs, bijoux, accessoires", "codes": ["7113.11", "7113.19"], "undetermined": "metal precieux employe", "synonyms": ["bijou argent", "bijou or", "plaque or"] },
-    { "id": "montre", "label": "Montre a quartz", "rayon": "Sacs, bijoux, accessoires", "codes": ["9102.11", "9102.12", "9102.19"], "undetermined": "affichage et boitier", "synonyms": ["montre bracelet"] },
-    { "id": "montreconnectee", "label": "Montre connectee", "rayon": "Sacs, bijoux, accessoires", "codes": ["8517.62", "9102.12"], "undetermined": "classement conteste : appareil de transmission ou montre", "synonyms": ["smartwatch", "bracelet connecte", "montre intelligente"] },
-    { "id": "lunettes", "label": "Lunettes de soleil", "rayon": "Sacs, bijoux, accessoires", "codes": ["9004.10"], "synonyms": ["solaires"] },
-    { "id": "accessoirecheveux", "label": "Pince, chouchou, barrette", "rayon": "Sacs, bijoux, accessoires", "codes": ["9615.11", "9615.19", "9615.90"], "undetermined": "plastique ou autre matiere", "synonyms": ["chouchou", "barrette", "serre-tete", "elastique cheveux"] },
-    { "id": "parapluie", "label": "Parapluie", "rayon": "Sacs, bijoux, accessoires", "codes": ["6601.99"], "synonyms": [] },
-
-    { "id": "rougealevres", "label": "Rouge a levres, gloss", "rayon": "Beaute", "codes": ["3304.10"], "synonyms": ["gloss", "baume teinte", "lipstick"] },
-    { "id": "yeux", "label": "Mascara, fard a paupieres", "rayon": "Beaute", "codes": ["3304.20"], "synonyms": ["mascara", "eyeliner", "palette", "fard"] },
-    { "id": "vernis", "label": "Vernis a ongles", "rayon": "Beaute", "codes": ["3304.30"], "synonyms": ["nail art"] },
-    { "id": "teint", "label": "Fond de teint, creme visage", "rayon": "Beaute", "codes": ["3304.99"], "synonyms": ["fond de teint", "creme", "serum", "blush", "poudre"] },
-    { "id": "parfum", "label": "Parfum, eau de toilette", "rayon": "Beaute", "codes": ["3303.00"], "synonyms": ["eau de toilette", "eau de parfum"] },
-    { "id": "deodorant", "label": "Deodorant", "rayon": "Beaute", "codes": ["3307.20"], "synonyms": ["anti-transpirant"] },
-    { "id": "cheveux", "label": "Shampoing, soin cheveux", "rayon": "Beaute", "codes": ["3305.10", "3305.90"], "undetermined": "shampoing ou autre preparation", "synonyms": ["shampoing", "apres-shampoing", "masque cheveux", "huile cheveux"] },
-    { "id": "pinceau", "label": "Pinceau de maquillage", "rayon": "Beaute", "codes": ["9603.30"], "synonyms": ["brosse maquillage", "eponge"] },
-    { "id": "fauxcils", "label": "Faux cils, extensions", "rayon": "Beaute", "codes": ["6704.11", "6704.19", "6704.20"], "undetermined": "cheveux humains ou matiere synthetique", "synonyms": ["perruque", "extensions cheveux", "faux ongles"] },
-
-    { "id": "ecouteurs", "label": "Ecouteurs, casque", "rayon": "Tech", "codes": ["8518.30"], "synonyms": ["casque audio", "airpods", "earbuds"] },
-    { "id": "enceinte", "label": "Enceinte bluetooth", "rayon": "Tech", "codes": ["8518.21", "8518.22", "8518.29"], "undetermined": "nombre de haut-parleurs dans l enceinte", "synonyms": ["haut-parleur", "speaker"] },
-    { "id": "cable", "label": "Cable USB", "rayon": "Tech", "codes": ["8544.42"], "synonyms": ["cordon", "usb-c", "lightning"] },
-    { "id": "chargeur", "label": "Chargeur secteur", "rayon": "Tech", "codes": ["8504.40"], "synonyms": ["adaptateur", "bloc secteur", "chargeur sans fil"] },
-    { "id": "batterie", "label": "Batterie externe", "rayon": "Tech", "codes": ["8507.60"], "synonyms": ["powerbank", "power bank"] },
-    { "id": "coque", "label": "Coque de telephone", "rayon": "Tech", "codes": ["3926.90", "4202.32"], "undetermined": "plastique, ou cuir et textile", "synonyms": ["housse telephone", "etui telephone", "case"] },
-    { "id": "protection", "label": "Protection d ecran", "rayon": "Tech", "codes": ["3919.90", "7007.19"], "undetermined": "film plastique ou verre trempe", "synonyms": ["verre trempe", "film protecteur"] },
-    { "id": "smartphone", "label": "Smartphone", "rayon": "Tech", "codes": ["8517.13"], "synonyms": ["telephone portable", "mobile"] },
-    { "id": "peripherique", "label": "Clavier, souris", "rayon": "Tech", "codes": ["8471.60"], "synonyms": ["clavier", "souris", "tapis de souris", "manette"] },
-    { "id": "stockage", "label": "Cle USB, carte memoire", "rayon": "Tech", "codes": ["8523.51"], "synonyms": ["carte sd", "microsd", "ssd portable"] },
-    { "id": "support", "label": "Support de telephone", "rayon": "Tech", "codes": ["3926.90", "7326.90", "8302.50"], "undetermined": "plastique ou metal", "synonyms": ["trepied", "ring light support", "bras articule"] },
-    { "id": "led", "label": "Ruban LED, guirlande", "rayon": "Tech", "codes": ["8539.52", "9405.42"], "undetermined": "lampe ou appareil complet", "synonyms": ["guirlande lumineuse", "neon led", "ring light"] },
-    { "id": "drone", "label": "Drone, engin telecommande", "rayon": "Tech", "codes": ["8806.21", "8806.91", "9503.00"], "undetermined": "jouet ou aeronef sans pilote", "synonyms": ["voiture telecommandee", "quadricoptere"] },
-
-    { "id": "mug", "label": "Mug, tasse, verre", "rayon": "Maison", "codes": ["6911.10", "6912.00", "7013.49"], "undetermined": "porcelaine, ceramique ou verre", "synonyms": ["tasse", "verre", "gourde ceramique"] },
-    { "id": "assiette", "label": "Assiette, plat", "rayon": "Maison", "codes": ["6911.10", "6912.00"], "undetermined": "porcelaine ou autre ceramique", "synonyms": ["bol", "plat", "vaisselle"] },
-    { "id": "couverture", "label": "Couverture, plaid", "rayon": "Maison", "codes": ["6301.30", "6301.40"], "undetermined": "fibre", "synonyms": ["plaid", "couvre-lit"] },
-    { "id": "lingedelit", "label": "Linge de lit", "rayon": "Maison", "codes": ["6302.21", "6302.31"], "undetermined": "fibre et impression", "synonyms": ["housse de couette", "drap", "taie oreiller"] },
-    { "id": "serviette", "label": "Serviette de bain", "rayon": "Maison", "codes": ["6302.60"], "synonyms": ["drap de bain", "serviette eponge"] },
-    { "id": "rangement", "label": "Boite de rangement plastique", "rayon": "Maison", "codes": ["3924.90"], "synonyms": ["organisateur", "panier plastique"] },
-    { "id": "bougie", "label": "Bougie", "rayon": "Maison", "codes": ["3406.00"], "synonyms": ["bougie parfumee"] },
-    { "id": "planteartificielle", "label": "Plante artificielle", "rayon": "Maison", "codes": ["6702.10", "6702.90"], "undetermined": "plastique ou autre matiere", "synonyms": ["fleurs artificielles", "fausse plante"] },
-    { "id": "tapis", "label": "Tapis", "rayon": "Maison", "codes": ["5703.31", "5705.00"], "undetermined": "procede de fabrication", "synonyms": ["carpette", "descente de lit"] },
-    { "id": "ustensile", "label": "Ustensile de cuisine", "rayon": "Maison", "codes": ["3924.10", "8215.99"], "undetermined": "plastique ou metal", "synonyms": ["spatule", "couverts", "moule"] },
-    { "id": "outil", "label": "Outil a main", "rayon": "Maison", "codes": ["8205.59"], "synonyms": ["tournevis", "pince", "marteau"] },
-
-    { "id": "jouet", "label": "Jouet, peluche, puzzle", "rayon": "Enfants, loisirs", "codes": ["9503.00"], "synonyms": ["peluche", "puzzle", "figurine", "poupee", "lego"] },
-    { "id": "jeu", "label": "Jeu de societe, cartes", "rayon": "Enfants, loisirs", "codes": ["9504.40"], "synonyms": ["cartes a jouer", "jeu de cartes"] },
-    { "id": "bebe", "label": "Vetement de bebe", "rayon": "Enfants, loisirs", "codes": ["6111.20", "6111.30", "6209.20", "6209.30"], "undetermined": "maille ou tisse, et fibre", "synonyms": ["body bebe", "pyjama bebe", "grenouillere"] },
-    { "id": "sport", "label": "Article de sport", "rayon": "Enfants, loisirs", "codes": ["9506.62", "9506.91", "9506.99"], "undetermined": "nature de l article", "synonyms": ["ballon", "halteres", "tapis de yoga", "elastique fitness"] }
+    {
+      "id": "tshirt",
+      "label": "T-shirt, débardeur",
+      "rayon": "Vetements",
+      "codes": [
+        "6109.10",
+        "6109.90"
+      ],
+      "undetermined": "fibre : coton ou synthetique",
+      "synonyms": [
+        "tee shirt",
+        "top",
+        "debardeur",
+        "marcel"
+      ]
+    },
+    {
+      "id": "pull",
+      "label": "Pull, sweat, hoodie",
+      "rayon": "Vetements",
+      "codes": [
+        "6110.20",
+        "6110.30"
+      ],
+      "undetermined": "fibre : coton ou synthetique",
+      "synonyms": [
+        "sweat",
+        "hoodie",
+        "sweatshirt",
+        "gilet",
+        "cardigan"
+      ]
+    },
+    {
+      "id": "chemise",
+      "label": "Chemise, chemisier",
+      "rayon": "Vetements",
+      "codes": [
+        "6105.10",
+        "6106.10",
+        "6205.20",
+        "6206.30"
+      ],
+      "undetermined": "maille ou tisse, et genre",
+      "synonyms": [
+        "chemisier",
+        "blouse"
+      ]
+    },
+    {
+      "id": "robe",
+      "label": "Robe",
+      "rayon": "Vetements",
+      "codes": [
+        "6104.43",
+        "6104.44",
+        "6204.42",
+        "6204.44"
+      ],
+      "undetermined": "maille ou tisse, et fibre",
+      "synonyms": [
+        "robe longue",
+        "robe d ete"
+      ]
+    },
+    {
+      "id": "jupe",
+      "label": "Jupe",
+      "rayon": "Vetements",
+      "codes": [
+        "6104.53",
+        "6204.52",
+        "6204.59"
+      ],
+      "undetermined": "maille ou tisse, et fibre",
+      "synonyms": [
+        "jupe plissee"
+      ]
+    },
+    {
+      "id": "pantalon",
+      "label": "Pantalon, jean",
+      "rayon": "Vetements",
+      "codes": [
+        "6103.42",
+        "6104.62",
+        "6203.42",
+        "6204.62"
+      ],
+      "undetermined": "maille ou tisse, et genre",
+      "synonyms": [
+        "jean",
+        "denim",
+        "short",
+        "bermuda",
+        "cargo"
+      ]
+    },
+    {
+      "id": "legging",
+      "label": "Legging",
+      "rayon": "Vetements",
+      "codes": [
+        "6104.63",
+        "6104.69"
+      ],
+      "undetermined": "fibre",
+      "synonyms": [
+        "collant de sport",
+        "jogging"
+      ]
+    },
+    {
+      "id": "veste",
+      "label": "Veste, manteau",
+      "rayon": "Vetements",
+      "codes": [
+        "6101.30",
+        "6102.30",
+        "6201.40",
+        "6202.40"
+      ],
+      "undetermined": "maille ou tisse, et genre",
+      "synonyms": [
+        "manteau",
+        "doudoune",
+        "blouson",
+        "parka",
+        "trench"
+      ]
+    },
+    {
+      "id": "pyjama",
+      "label": "Pyjama, vêtement de nuit",
+      "rayon": "Vetements",
+      "codes": [
+        "6107.21",
+        "6108.31",
+        "6108.32"
+      ],
+      "undetermined": "genre et fibre",
+      "synonyms": [
+        "nuisette",
+        "peignoir",
+        "robe de chambre"
+      ]
+    },
+    {
+      "id": "sousvetement",
+      "label": "Culotte, slip, boxer",
+      "rayon": "Vetements",
+      "codes": [
+        "6107.11",
+        "6108.21",
+        "6108.22"
+      ],
+      "undetermined": "genre et fibre",
+      "synonyms": [
+        "slip",
+        "boxer",
+        "string",
+        "lingerie"
+      ]
+    },
+    {
+      "id": "soutiengorge",
+      "label": "Soutien-gorge",
+      "rayon": "Vetements",
+      "codes": [
+        "6212.10"
+      ],
+      "synonyms": [
+        "brassiere",
+        "bralette"
+      ]
+    },
+    {
+      "id": "maillot",
+      "label": "Maillot de bain",
+      "rayon": "Vetements",
+      "codes": [
+        "6112.31",
+        "6112.39",
+        "6112.41",
+        "6112.49"
+      ],
+      "undetermined": "genre et fibre",
+      "synonyms": [
+        "bikini",
+        "short de bain"
+      ]
+    },
+    {
+      "id": "chaussettes",
+      "label": "Chaussettes, collants",
+      "rayon": "Vetements",
+      "codes": [
+        "6115.95",
+        "6115.96"
+      ],
+      "undetermined": "fibre",
+      "synonyms": [
+        "collant",
+        "bas",
+        "socquettes"
+      ]
+    },
+    {
+      "id": "bonnet",
+      "label": "Bonnet, casquette, chapeau",
+      "rayon": "Vetements",
+      "codes": [
+        "6505.00"
+      ],
+      "synonyms": [
+        "casquette",
+        "chapeau",
+        "beanie",
+        "bob"
+      ]
+    },
+    {
+      "id": "echarpe",
+      "label": "Écharpe, foulard",
+      "rayon": "Vetements",
+      "codes": [
+        "6214.10",
+        "6214.20",
+        "6214.30"
+      ],
+      "undetermined": "matiere : soie, laine ou synthetique",
+      "synonyms": [
+        "foulard",
+        "chale",
+        "snood"
+      ]
+    },
+    {
+      "id": "gants",
+      "label": "Gants",
+      "rayon": "Vetements",
+      "codes": [
+        "6116.93",
+        "6116.99",
+        "4203.29"
+      ],
+      "undetermined": "maille ou cuir",
+      "synonyms": [
+        "moufles"
+      ]
+    },
+    {
+      "id": "ceinture",
+      "label": "Ceinture",
+      "rayon": "Vetements",
+      "codes": [
+        "4203.30",
+        "3926.20",
+        "6217.10"
+      ],
+      "undetermined": "cuir, plastique ou textile",
+      "synonyms": []
+    },
+    {
+      "id": "baskets",
+      "label": "Baskets, sneakers",
+      "rayon": "Chaussures",
+      "codes": [
+        "6403.99",
+        "6404.11"
+      ],
+      "undetermined": "dessus cuir ou textile",
+      "synonyms": [
+        "sneakers",
+        "tennis",
+        "chaussures de sport",
+        "running"
+      ]
+    },
+    {
+      "id": "bottes",
+      "label": "Bottes, bottines",
+      "rayon": "Chaussures",
+      "codes": [
+        "6402.91",
+        "6403.91"
+      ],
+      "undetermined": "dessus cuir, plastique ou caoutchouc",
+      "synonyms": [
+        "bottines",
+        "boots"
+      ]
+    },
+    {
+      "id": "sandales",
+      "label": "Sandales, tongs",
+      "rayon": "Chaussures",
+      "codes": [
+        "6402.20",
+        "6402.99",
+        "6404.19"
+      ],
+      "undetermined": "dessus plastique ou textile",
+      "synonyms": [
+        "tongs",
+        "claquettes",
+        "mules",
+        "escarpins"
+      ]
+    },
+    {
+      "id": "chaussons",
+      "label": "Chaussons",
+      "rayon": "Chaussures",
+      "codes": [
+        "6405.20",
+        "6405.90"
+      ],
+      "undetermined": "dessus textile ou autre",
+      "synonyms": [
+        "pantoufles",
+        "charentaises"
+      ]
+    },
+    {
+      "id": "sac",
+      "label": "Sac à main, sac à dos",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "4202.21",
+        "4202.22",
+        "4202.91",
+        "4202.92"
+      ],
+      "undetermined": "cuir, textile ou plastique",
+      "synonyms": [
+        "sac a dos",
+        "pochette",
+        "tote bag",
+        "besace"
+      ]
+    },
+    {
+      "id": "portefeuille",
+      "label": "Portefeuille, porte-cartes",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "4202.31",
+        "4202.32",
+        "4202.39"
+      ],
+      "undetermined": "cuir, textile ou plastique",
+      "synonyms": [
+        "porte-monnaie",
+        "porte-cartes"
+      ]
+    },
+    {
+      "id": "valise",
+      "label": "Valise, bagage",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "4202.11",
+        "4202.12",
+        "4202.19"
+      ],
+      "undetermined": "cuir, textile ou plastique",
+      "synonyms": [
+        "bagage",
+        "trolley"
+      ]
+    },
+    {
+      "id": "bijoufantaisie",
+      "label": "Bijou fantaisie",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "7117.19",
+        "7117.90"
+      ],
+      "undetermined": "metal commun ou autre matiere",
+      "synonyms": [
+        "collier",
+        "bracelet",
+        "boucles d oreilles",
+        "bague",
+        "pendentif"
+      ]
+    },
+    {
+      "id": "bijouprecieux",
+      "label": "Bijou en argent ou en or",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "7113.11",
+        "7113.19"
+      ],
+      "undetermined": "metal precieux employe",
+      "synonyms": [
+        "bijou argent",
+        "bijou or",
+        "plaque or"
+      ]
+    },
+    {
+      "id": "montre",
+      "label": "Montre à quartz",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "9102.11",
+        "9102.12",
+        "9102.19"
+      ],
+      "undetermined": "affichage et boitier",
+      "synonyms": [
+        "montre bracelet"
+      ]
+    },
+    {
+      "id": "montreconnectee",
+      "label": "Montre connectée",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "8517.62",
+        "9102.12"
+      ],
+      "undetermined": "classement conteste : appareil de transmission ou montre",
+      "synonyms": [
+        "smartwatch",
+        "bracelet connecte",
+        "montre intelligente"
+      ]
+    },
+    {
+      "id": "lunettes",
+      "label": "Lunettes de soleil",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "9004.10"
+      ],
+      "synonyms": [
+        "solaires"
+      ]
+    },
+    {
+      "id": "accessoirecheveux",
+      "label": "Pince, chouchou, barrette",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "9615.11",
+        "9615.19",
+        "9615.90"
+      ],
+      "undetermined": "plastique ou autre matiere",
+      "synonyms": [
+        "chouchou",
+        "barrette",
+        "serre-tete",
+        "elastique cheveux"
+      ]
+    },
+    {
+      "id": "parapluie",
+      "label": "Parapluie",
+      "rayon": "Sacs, bijoux, accessoires",
+      "codes": [
+        "6601.99"
+      ],
+      "synonyms": []
+    },
+    {
+      "id": "rougealevres",
+      "label": "Rouge a lèvres, gloss",
+      "rayon": "Beaute",
+      "codes": [
+        "3304.10"
+      ],
+      "synonyms": [
+        "gloss",
+        "baume teinte",
+        "lipstick"
+      ]
+    },
+    {
+      "id": "yeux",
+      "label": "Mascara, fard a paupières",
+      "rayon": "Beaute",
+      "codes": [
+        "3304.20"
+      ],
+      "synonyms": [
+        "mascara",
+        "eyeliner",
+        "palette",
+        "fard"
+      ]
+    },
+    {
+      "id": "vernis",
+      "label": "Vernis à ongles",
+      "rayon": "Beaute",
+      "codes": [
+        "3304.30"
+      ],
+      "synonyms": [
+        "nail art"
+      ]
+    },
+    {
+      "id": "teint",
+      "label": "Fond de teint, crème visage",
+      "rayon": "Beaute",
+      "codes": [
+        "3304.99"
+      ],
+      "synonyms": [
+        "fond de teint",
+        "creme",
+        "serum",
+        "blush",
+        "poudre"
+      ]
+    },
+    {
+      "id": "parfum",
+      "label": "Parfum, eau de toilette",
+      "rayon": "Beaute",
+      "codes": [
+        "3303.00"
+      ],
+      "synonyms": [
+        "eau de toilette",
+        "eau de parfum"
+      ]
+    },
+    {
+      "id": "deodorant",
+      "label": "Deodorant",
+      "rayon": "Beaute",
+      "codes": [
+        "3307.20"
+      ],
+      "synonyms": [
+        "anti-transpirant"
+      ]
+    },
+    {
+      "id": "cheveux",
+      "label": "Shampoing, soin cheveux",
+      "rayon": "Beaute",
+      "codes": [
+        "3305.10",
+        "3305.90"
+      ],
+      "undetermined": "shampoing ou autre preparation",
+      "synonyms": [
+        "shampoing",
+        "apres-shampoing",
+        "masque cheveux",
+        "huile cheveux"
+      ]
+    },
+    {
+      "id": "pinceau",
+      "label": "Pinceau de maquillage",
+      "rayon": "Beaute",
+      "codes": [
+        "9603.30"
+      ],
+      "synonyms": [
+        "brosse maquillage",
+        "eponge"
+      ]
+    },
+    {
+      "id": "fauxcils",
+      "label": "Faux cils, extensions",
+      "rayon": "Beaute",
+      "codes": [
+        "6704.11",
+        "6704.19",
+        "6704.20"
+      ],
+      "undetermined": "cheveux humains ou matiere synthetique",
+      "synonyms": [
+        "perruque",
+        "extensions cheveux",
+        "faux ongles"
+      ]
+    },
+    {
+      "id": "ecouteurs",
+      "label": "Écouteurs, casque",
+      "rayon": "Tech",
+      "codes": [
+        "8518.30"
+      ],
+      "synonyms": [
+        "casque audio",
+        "airpods",
+        "earbuds"
+      ]
+    },
+    {
+      "id": "enceinte",
+      "label": "Enceinte bluetooth",
+      "rayon": "Tech",
+      "codes": [
+        "8518.21",
+        "8518.22",
+        "8518.29"
+      ],
+      "undetermined": "nombre de haut-parleurs dans l enceinte",
+      "synonyms": [
+        "haut-parleur",
+        "speaker"
+      ]
+    },
+    {
+      "id": "cable",
+      "label": "Cable USB",
+      "rayon": "Tech",
+      "codes": [
+        "8544.42"
+      ],
+      "synonyms": [
+        "cordon",
+        "usb-c",
+        "lightning"
+      ]
+    },
+    {
+      "id": "chargeur",
+      "label": "Chargeur secteur",
+      "rayon": "Tech",
+      "codes": [
+        "8504.40"
+      ],
+      "synonyms": [
+        "adaptateur",
+        "bloc secteur",
+        "chargeur sans fil"
+      ]
+    },
+    {
+      "id": "batterie",
+      "label": "Batterie externe",
+      "rayon": "Tech",
+      "codes": [
+        "8507.60"
+      ],
+      "synonyms": [
+        "powerbank",
+        "power bank"
+      ]
+    },
+    {
+      "id": "coque",
+      "label": "Coque de téléphone",
+      "rayon": "Tech",
+      "codes": [
+        "3926.90",
+        "4202.32"
+      ],
+      "undetermined": "plastique, ou cuir et textile",
+      "synonyms": [
+        "housse telephone",
+        "etui telephone",
+        "case"
+      ]
+    },
+    {
+      "id": "protection",
+      "label": "Protection d ecran",
+      "rayon": "Tech",
+      "codes": [
+        "3919.90",
+        "7007.19"
+      ],
+      "undetermined": "film plastique ou verre trempe",
+      "synonyms": [
+        "verre trempe",
+        "film protecteur"
+      ]
+    },
+    {
+      "id": "smartphone",
+      "label": "Smartphone",
+      "rayon": "Tech",
+      "codes": [
+        "8517.13"
+      ],
+      "synonyms": [
+        "telephone portable",
+        "mobile"
+      ]
+    },
+    {
+      "id": "peripherique",
+      "label": "Clavier, souris",
+      "rayon": "Tech",
+      "codes": [
+        "8471.60"
+      ],
+      "synonyms": [
+        "clavier",
+        "souris",
+        "tapis de souris",
+        "manette"
+      ]
+    },
+    {
+      "id": "stockage",
+      "label": "Cle USB, carte mémoire",
+      "rayon": "Tech",
+      "codes": [
+        "8523.51"
+      ],
+      "synonyms": [
+        "carte sd",
+        "microsd",
+        "ssd portable"
+      ]
+    },
+    {
+      "id": "support",
+      "label": "Support de téléphone",
+      "rayon": "Tech",
+      "codes": [
+        "3926.90",
+        "7326.90",
+        "8302.50"
+      ],
+      "undetermined": "plastique ou metal",
+      "synonyms": [
+        "trepied",
+        "ring light support",
+        "bras articule"
+      ]
+    },
+    {
+      "id": "led",
+      "label": "Ruban LED, guirlande",
+      "rayon": "Tech",
+      "codes": [
+        "8539.52",
+        "9405.42"
+      ],
+      "undetermined": "lampe ou appareil complet",
+      "synonyms": [
+        "guirlande lumineuse",
+        "neon led",
+        "ring light"
+      ]
+    },
+    {
+      "id": "drone",
+      "label": "Drone, engin telecommande",
+      "rayon": "Tech",
+      "codes": [
+        "8806.21",
+        "8806.91",
+        "9503.00"
+      ],
+      "undetermined": "jouet ou aeronef sans pilote",
+      "synonyms": [
+        "voiture telecommandee",
+        "quadricoptere"
+      ]
+    },
+    {
+      "id": "mug",
+      "label": "Mug, tasse, verre",
+      "rayon": "Maison",
+      "codes": [
+        "6911.10",
+        "6912.00",
+        "7013.49"
+      ],
+      "undetermined": "porcelaine, ceramique ou verre",
+      "synonyms": [
+        "tasse",
+        "verre",
+        "gourde ceramique"
+      ]
+    },
+    {
+      "id": "assiette",
+      "label": "Assiette, plat",
+      "rayon": "Maison",
+      "codes": [
+        "6911.10",
+        "6912.00"
+      ],
+      "undetermined": "porcelaine ou autre ceramique",
+      "synonyms": [
+        "bol",
+        "plat",
+        "vaisselle"
+      ]
+    },
+    {
+      "id": "couverture",
+      "label": "Couverture, plaid",
+      "rayon": "Maison",
+      "codes": [
+        "6301.30",
+        "6301.40"
+      ],
+      "undetermined": "fibre",
+      "synonyms": [
+        "plaid",
+        "couvre-lit"
+      ]
+    },
+    {
+      "id": "lingedelit",
+      "label": "Linge de lit",
+      "rayon": "Maison",
+      "codes": [
+        "6302.21",
+        "6302.31"
+      ],
+      "undetermined": "fibre et impression",
+      "synonyms": [
+        "housse de couette",
+        "drap",
+        "taie oreiller"
+      ]
+    },
+    {
+      "id": "serviette",
+      "label": "Serviette de bain",
+      "rayon": "Maison",
+      "codes": [
+        "6302.60"
+      ],
+      "synonyms": [
+        "drap de bain",
+        "serviette eponge"
+      ]
+    },
+    {
+      "id": "rangement",
+      "label": "Boîte de rangement plastique",
+      "rayon": "Maison",
+      "codes": [
+        "3924.90"
+      ],
+      "synonyms": [
+        "organisateur",
+        "panier plastique"
+      ]
+    },
+    {
+      "id": "bougie",
+      "label": "Bougie",
+      "rayon": "Maison",
+      "codes": [
+        "3406.00"
+      ],
+      "synonyms": [
+        "bougie parfumee"
+      ]
+    },
+    {
+      "id": "planteartificielle",
+      "label": "Plante artificielle",
+      "rayon": "Maison",
+      "codes": [
+        "6702.10",
+        "6702.90"
+      ],
+      "undetermined": "plastique ou autre matiere",
+      "synonyms": [
+        "fleurs artificielles",
+        "fausse plante"
+      ]
+    },
+    {
+      "id": "tapis",
+      "label": "Tapis",
+      "rayon": "Maison",
+      "codes": [
+        "5703.31",
+        "5705.00"
+      ],
+      "undetermined": "procede de fabrication",
+      "synonyms": [
+        "carpette",
+        "descente de lit"
+      ]
+    },
+    {
+      "id": "ustensile",
+      "label": "Ustensile de cuisine",
+      "rayon": "Maison",
+      "codes": [
+        "3924.10",
+        "8215.99"
+      ],
+      "undetermined": "plastique ou metal",
+      "synonyms": [
+        "spatule",
+        "couverts",
+        "moule"
+      ]
+    },
+    {
+      "id": "outil",
+      "label": "Outil à main",
+      "rayon": "Maison",
+      "codes": [
+        "8205.59"
+      ],
+      "synonyms": [
+        "tournevis",
+        "pince",
+        "marteau"
+      ]
+    },
+    {
+      "id": "jouet",
+      "label": "Jouet, peluche, puzzle",
+      "rayon": "Enfants, loisirs",
+      "codes": [
+        "9503.00"
+      ],
+      "synonyms": [
+        "peluche",
+        "puzzle",
+        "figurine",
+        "poupee",
+        "lego"
+      ]
+    },
+    {
+      "id": "jeu",
+      "label": "Jeu de société, cartes",
+      "rayon": "Enfants, loisirs",
+      "codes": [
+        "9504.40"
+      ],
+      "synonyms": [
+        "cartes a jouer",
+        "jeu de cartes"
+      ]
+    },
+    {
+      "id": "bebe",
+      "label": "Vêtement de bébé",
+      "rayon": "Enfants, loisirs",
+      "codes": [
+        "6111.20",
+        "6111.30",
+        "6209.20",
+        "6209.30"
+      ],
+      "undetermined": "maille ou tisse, et fibre",
+      "synonyms": [
+        "body bebe",
+        "pyjama bebe",
+        "grenouillere"
+      ]
+    },
+    {
+      "id": "sport",
+      "label": "Article de sport",
+      "rayon": "Enfants, loisirs",
+      "codes": [
+        "9506.62",
+        "9506.91",
+        "9506.99"
+      ],
+      "undetermined": "nature de l article",
+      "synonyms": [
+        "ballon",
+        "halteres",
+        "tapis de yoga",
+        "elastique fitness"
+      ]
+    }
   ]
 }

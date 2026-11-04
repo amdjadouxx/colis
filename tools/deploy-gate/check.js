@@ -51,8 +51,8 @@ if (manifest) {
   ajouter(!m.host_permissions, "Aucune permission d hote", m.host_permissions ? "host_permissions declare" : "activeTab seul");
 }
 
-const backlog = (await lire("LEGAL.md")) ?? "";
-ajouter(false, "CGU des trois plateformes lues", "non fait, voir LEGAL.md section 4");
+const backlog = (await lire("docs/juridique.md")) ?? "";
+ajouter(false, "CGU des trois plateformes lues", "non fait, voir docs/juridique.md section 4");
 ajouter(false, "Clause de non-responsabilite relue par un juriste", "non fait, question de fond non tranchee");
 ajouter(
   backlog.includes("Cloudflare Web Analytics"),

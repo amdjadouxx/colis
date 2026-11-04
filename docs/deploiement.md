@@ -27,7 +27,7 @@ Franchie.
 
 ## Porte 2 — Juridique
 
-Détail dans [LEGAL.md](LEGAL.md). Trois actions, aucune difficile, **aucune que je puisse faire à ta place**.
+Détail dans [juridique.md](juridique.md). Trois actions, aucune difficile, **aucune que je puisse faire à ta place**.
 
 1. **Mentions légales.** Modèle en annexe A. Régime d'anonymat possible pour un éditeur non professionnel : identité communiquée à l'hébergeur, coordonnées de l'hébergeur affichées sur le site. Sanction encourue sans elles : 1 an et 75 000 €.
 2. **Clause de non-responsabilité relue par un juriste.** Modèle en annexe B. La question de fond reste ouverte : mes recherches n'ont rien donné sur la portée réelle d'une clause limitative pour un outil d'estimation gratuit en droit français.
@@ -68,7 +68,7 @@ Contexte pour calibrer : entre juin et juillet 2026 les volumes ont chuté de 50
 |---|---|
 | `apps/web` — page statique | oui, Pages. Aucun appel réseau. |
 | `apps/extension` — extension | local non empaquetée d'abord. Le store vient après, et implique de renoncer à l'anonymat du point 1. |
-| `apps/api` — Worker | **non.** Il recevrait les paniers, et tout le raisonnement RGPD de LEGAL.md tomberait. Il reste utile hors ligne et en test. |
+| `apps/api` — Worker | **non.** Il recevrait les paniers, et tout le raisonnement RGPD de juridique.md tomberait. Il reste utile hors ligne et en test. |
 
 Ordre : page d'abord, extension ensuite, API jamais sans décision explicite et nouvelle analyse juridique.
 

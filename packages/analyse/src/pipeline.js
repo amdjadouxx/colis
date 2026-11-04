@@ -20,7 +20,7 @@ import { analyse } from "./index.js";
  * @property {number} value         Prix unitaire multiplie par la quantite, 0 si inconnu.
  * @property {string|null} undetermined
  * @property {string} source        Libelle brut, tel que lu sur la page.
- * @property {boolean} exempt       Declare expedie depuis l'Union par la page.
+ * @property {boolean} exempt       Declare expédié depuis l'Union par la page.
  */
 
 /**
@@ -77,7 +77,7 @@ export function analyseCart(blob, options = {}) {
       codes: best.codes,
       qty: item.qty,
       value: item.unitPrice === null ? 0 : Math.round(item.unitPrice * item.qty * 100) / 100,
-      undetermined: best.codes.length > 1 ? "code non determine par la fiche produit" : null,
+      undetermined: best.codes.length > 1 ? "code non déterminé par la fiche produit" : null,
       source: item.title,
       exempt: item.exempt === true,
     });
@@ -96,13 +96,13 @@ export function analyseCart(blob, options = {}) {
   // Un panier porte des prix. Sans un seul prix parmi les lignes reconnues,
   // ce qu'on tient vient du texte de navigation, pas d'un panier : sur une
   // page 404 d'AliExpress le mot "chaussettes" suffisait a faire apparaitre
-  // un article, et sur un ecran de verification Temu le mot "jouet". Mieux
+  // un article, et sur un écran de verification Temu le mot "jouet". Mieux
   // vaut ne rien annoncer que d'annoncer un panier qui n'existe pas.
   if (!lines.some((l) => l.value > 0)) {
     return {
       ok: false,
       reason:
-        "Aucun panier detecte sur cette page : des libelles ont ete reconnus, mais aucun prix. Ouvrir la page du panier ou de la commande.",
+        "Aucun panier détecté sur cette page : des libelles ont ete reconnus, mais aucun prix. Ouvrir la page du panier ou de la commande.",
       parsed,
       unrecognised,
       lines,
@@ -119,7 +119,7 @@ export function analyseCart(blob, options = {}) {
     return {
       ok: false,
       reason:
-        "Aucun frais d'importation : tous les articles reconnus sont declares expedies depuis l'Union europeenne par la page elle-meme.",
+        "Aucun frais d'importation : tous les articles reconnus sont déclarés expédiés depuis l'Union européenne par la page elle-meme.",
       parsed,
       unrecognised,
       lines,

@@ -14,6 +14,10 @@ Moteur de calcul des frais douaniers **par catégorie tarifaire** pour les envoi
 
 Depuis le 1ᵉʳ juillet 2026 un droit forfaitaire de 3 € s'applique par catégorie d'article (envois ≤ 150 €), et depuis le 1ᵉʳ novembre 2026 s'y ajoutent 2 € de frais de traitement, sans seuil de valeur. Le coût d'une commande ne dépend donc pas du nombre d'articles mais du **nombre de sous-positions tarifaires distinctes** qu'elle contient.
 
+![Aperçu de la page d'analyse](docs/images/apercu-page.png)
+
+Les forfaits frappent en proportion inverse du prix : sur cet exemple, une babiole à 1,20 € porte **+417 %** de frais là où un article à 12,50 € en porte 40 %. C'est ce classement par ligne qui a de la valeur — le total, lui, se calcule de tête.
+
 ## Ce que ça résout, et ce que ça ne résout pas
 
 La règle simple — « groupe les articles identiques » — est déjà publique et largement diffusée. Ce qui ne l'est pas, c'est la **frontière** : un t-shirt en coton et un t-shirt en polyester sont deux catégories (`6109.10` / `6109.90`) ; un rouge à lèvres et un mascara aussi (`3304.10` / `3304.20`), alors que tout le monde les compte comme « cosmétiques » ; un bonnet et une casquette n'en font qu'une (`6505.00`).
@@ -101,6 +105,17 @@ Contexte chiffré pour calibrer les attentes : entre juin et juillet 2026, les v
 Les sous-positions du catalogue sont les classements usuels de ces articles, **pas un classement officiel** : seule la douane tranche. Le redevable légal est la plateforme, le vendeur ou le transporteur — la douane ne s'adresse jamais aux particuliers pour ces sommes. Ne sont pas calculés : la TVA à l'importation sur la marchandise, les droits de droit commun au-delà de 150 €, et les frais de dossier des transporteurs, qui sont libres et non réglementés.
 
 Sources : [douane.gouv.fr](https://www.douane.gouv.fr/petits-colis-ce-qui-change-pour-vos-achats-en-ligne) · [economie.gouv.fr](https://www.economie.gouv.fr/particuliers/mes-droits-conso/bien-consommer/tout-savoir-sur-la-taxe-sur-les-petits-colis) · [TARIC open data mirror](https://github.com/rousseauxy/taric-opendata)
+
+## Documentation
+
+| | |
+|---|---|
+| [docs/validation-du-concept.md](docs/validation-du-concept.md) | Le test qui a servi à réfuter le concept, ses seuils posés à l'avance, et pourquoi il échoue sur son critère décisif |
+| [docs/juridique.md](docs/juridique.md) | Ce qui est vérifié, ce qui est raisonné, ce qui reste ouvert. Rédigé pour une relecture par un juriste |
+| [docs/deploiement.md](docs/deploiement.md) | Trois portes à franchir, seuil d'arrêt chiffré, modèles de mentions légales et d'avertissement |
+| [docs/backlog.md](docs/backlog.md) | Ce qui reste, dans l'ordre |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Démarrer, ajouter un article au catalogue, modifier un barème |
+| [SECURITY.md](SECURITY.md) | Le modèle de confidentialité et comment il est tenu par des tests |
 
 ## Garanties de qualité
 

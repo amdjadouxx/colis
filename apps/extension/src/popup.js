@@ -21,7 +21,6 @@ import { analyseCart } from "./engine.bundle.js";
 const out = /** @type {HTMLElement} */ (document.getElementById("out"));
 
 /** API de l extension, fournie par le navigateur. @type {any} */
-// eslint-disable-next-line no-undef
 const navigateur = /** @type {any} */ (globalThis).chrome;
 const eur = (v) => v.toFixed(2).replace(".", ",") + " €";
 const pct = (v) => (v === null ? "?" : "+" + Math.round(100 * v) + " %");
@@ -40,9 +39,9 @@ function render(picked) {
     // de la zone ou de la reconnaissance des libelles.
     message(
       `Aucun article reconnu.<br><br>` +
-        `Ouvre la page du panier ou de la commande, puis reessaie.` +
+        `Ouvre la page du panier ou de la commande, puis réessaie.` +
         `<div class="how" style="margin-top:10px;padding:8px 0 0">Zone lue : ${esc(picked.how)}, ` +
-        `${picked.length} caracteres.</div>` +
+        `${picked.length} caractères.</div>` +
         `<pre style="white-space:pre-wrap;font:10px ui-monospace,Consolas,monospace;` +
         `max-height:220px;overflow:auto;margin:6px 0 0">${esc(picked.text.slice(0, 1200))}</pre>`
     );
@@ -56,12 +55,12 @@ function render(picked) {
 
   let html =
     `<div class="pad" style="padding-top:0"><div class="big">${cats} ` +
-    `<small>${r.categories.max > 1 ? "categories" : "categorie"}</small></div>` +
+    `<small>${r.categories.max > 1 ? "catégories" : "catégorie"}</small></div>` +
     `<div class="cost">${cost} de frais` +
     (r.overallSurcharge !== null ? ` — ${pct(r.overallSurcharge)} sur ${eur(r.goodsValue)}` : "") +
     `</div></div>`;
 
-  html += `<table><thead><tr><th>Article</th><th class="n">Prix</th><th class="n">Frais</th><th class="n">Surcout</th></tr></thead><tbody>`;
+  html += `<table><thead><tr><th>Article</th><th class="n">Prix</th><th class="n">Frais</th><th class="n">Surcoût</th></tr></thead><tbody>`;
   for (const row of r.rows) {
     const hot = row.surcharge !== null && row.surcharge >= 1;
     html +=
@@ -74,7 +73,7 @@ function render(picked) {
 
   if (r.removable.length) {
     html +=
-      `<div class="note bad"><b>Les frais depassent le prix de ces articles.</b> ` +
+      `<div class="note bad"><b>Les frais dépassent le prix de ces articles.</b> ` +
       r.removable.map((x) => `${esc(x.label)} (${eur(x.value)}, ${pct(x.ratio)})`).join(", ") +
       `. Les retirer supprime ${eur(r.perCategory)} chacun.</div>`;
   }
@@ -86,10 +85,10 @@ function render(picked) {
   if (r.unrecognised.length) {
     html +=
       `<div class="note"><b>${r.unrecognised.length} ligne(s) non reconnue(s)</b>, donc non comptee(s). ` +
-      `Le total est sous-estime.</div>`;
+      `Le total est sous-estimé.</div>`;
   }
   html +=
-    `<div class="how">Zone lue : ${esc(picked.how)}, ${picked.length} caracteres. ` +
+    `<div class="how">Zone lue : ${esc(picked.how)}, ${picked.length} caractères. ` +
     `Classements usuels, pas un classement douanier officiel.</div>`;
 
   out.innerHTML = html;
