@@ -35,6 +35,7 @@ export function analyseCart(blob, options = {}) {
       value: item.unitPrice === null ? 0 : Math.round(item.unitPrice * item.qty * 100) / 100,
       undetermined: best.codes.length > 1 ? "code non determine par la fiche produit" : null,
       source: item.title,
+      exempt: item.exempt === true,
     });
   }
 
@@ -64,8 +65,26 @@ export function analyseCart(blob, options = {}) {
     };
   }
 
+  // Les articles que la page declare exoneres sortent du calcul : ils partent
+  // d'un entrepot situe dans l'Union, donc aucun frais d'importation n'est du.
+  // Les compter reviendrait a annoncer une somme a payer qui ne l'est pas.
+  const exoneres = lines.filter((l) => l.exempt);
+  const taxables = lines.filter((l) => !l.exempt);
+
+  if (taxables.length === 0) {
+    return {
+      ok: false,
+      reason:
+        "Aucun frais d'importation : tous les articles reconnus sont declares expedies depuis l'Union europeenne par la page elle-meme.",
+      parsed,
+      unrecognised,
+      lines,
+      exoneres,
+    };
+  }
+
   const result = analyse({
-    lines,
+    lines: taxables,
     // Valeur des seules lignes RECONNUES, et non le total brut du parseur.
     // Une page de panier porte des montants qui ne sont pas des articles :
     // economies, sous-total, coupons. Sur un vrai panier AliExpress, le total
@@ -73,8 +92,8 @@ export function analyseCart(blob, options = {}) {
     // divisait par trois les taux de surcout affiches.
     goodsValue:
       options.goodsValue ??
-      (lines.some((l) => l.value > 0)
-        ? Math.round(lines.reduce((s, l) => s + l.value, 0) * 100) / 100
+      (taxables.some((l) => l.value > 0)
+        ? Math.round(taxables.reduce((s, l) => s + l.value, 0) * 100) / 100
         : undefined),
     includeVat: options.includeVat,
     onDate: options.onDate,
@@ -84,6 +103,7 @@ export function analyseCart(blob, options = {}) {
     ok: true,
     ...result,
     lines,
+    exoneres,
     unrecognised,
     // Vrai si un montant lu n'est pas en euros. Le seuil de 150 EUR et les
     // taux de surcout ne peuvent pas etre affirmes sans conversion, donc on

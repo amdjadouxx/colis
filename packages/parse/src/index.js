@@ -102,6 +102,24 @@ const num = (s) => Number(s.replace(",", "."));
  */
 const looksLikeTitle = (s) => s.replace(/[^a-zA-Z]/g, "").length >= 3;
 
+/**
+ * Mentions par lesquelles les plateformes signalent qu'un article N'EST PAS
+ * soumis aux frais d'importation : il part d'un entrepot situe dans l'Union.
+ *
+ * Constate sur de vrais paniers. Shein affiche "Entrepot UE" et "Sans droits
+ * de douane en plus" ; AliExpress distingue "Sans frais d'importation" de
+ * "Des frais d'importation s'appliqueront", ligne par ligne.
+ *
+ * Ignorer ces mentions faisait facturer des frais sur des articles que la
+ * page declarait exoneres. C'est l'erreur la plus grave possible ici : elle
+ * annonce une somme a payer qui n'est pas due.
+ */
+const EXONERE =
+  /sans\s+(?:droits?\s+de\s+douane|frais\s+d.?\s*importation)|entrep[oô]t\s+ue|exp[eé]dition\s+locale|eu\s+warehouse|local\s+warehouse|ships?\s+from\s+(?:eu|europe|france)/i;
+
+/** Mention inverse : l'article est bien soumis aux frais. */
+const ASSUJETTI = /(?:des\s+)?frais\s+d.?\s*importation\s+s.?\s*appliq|import\s+(?:fees|charges)\s+appl/i;
+
 const MINUS = /^[-−–—]$/;
 const PLUS = /^[+＋]$/;
 
@@ -222,11 +240,26 @@ export function parseCart(blob) {
       if (title) ignored.push(title);
       return;
     }
-    items.push({ title, qty, unitPrice: price, currency: lastCurrency });
+    items.push({
+      title,
+      qty,
+      unitPrice: price,
+      currency: lastCurrency,
+      // Shein prefixe le libelle par "Entrepot UE" ; la mention est alors
+      // dans le titre et non sur une ligne a part.
+      exempt: EXONERE.test(title) ? true : null,
+    });
   };
 
   for (let index = 0; index < raw.length; index++) {
     const line = raw[index];
+    // Une mention d exoneration ou d assujettissement se rapporte a
+    // l article qui precede : les plateformes l affichent sous la ligne.
+    if (items.length > 0) {
+      if (EXONERE.test(line)) items[items.length - 1].exempt = true;
+      else if (ASSUJETTI.test(line)) items[items.length - 1].exempt = false;
+    }
+
     if (NOISE.test(line) || (ORDER_REF.test(line) && HAS_ID.test(line))) {
       ignored.push(line);
       continue;

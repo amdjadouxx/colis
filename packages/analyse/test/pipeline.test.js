@@ -120,3 +120,35 @@ test("pipeline : un seul prix suffit a reconnaitre un panier", () => {
   assert.equal(r.ok, true);
   assert.equal(r.categories.min, 2);
 });
+
+test("les articles declares expedies depuis l UE ne sont pas factures", () => {
+  // Les plateformes marquent elles-memes les lignes concernees. Shein affiche
+  // "Entrepot UE" et "Sans droits de douane en plus" ; AliExpress distingue
+  // "Sans frais d importation" de "Des frais d importation s appliqueront".
+  // Les ignorer faisait annoncer une somme a payer qui n est pas due.
+  const r = analyseCart(
+    "Autoradio 2Din Carplay ecran\n89,46€\nPrix TVA incluse | Sans frais dimportation\n" +
+      "Seche-cheveux haute vitesse ions negatifs\n51,99€\nPrix TTC | Des frais dimportation sappliqueront"
+  );
+  assert.equal(r.ok, true);
+  assert.equal(r.categories.min, 1, "seul l article assujetti compte");
+  assert.equal(r.fees.min, 5);
+  assert.equal(r.goodsValue, 51.99, "la marchandise exoneree sort du total");
+  assert.equal(r.exoneres.length, 1);
+  assert.match(r.exoneres[0].label, /Autoradio/);
+});
+
+test("mention d exoneration portee par le libelle lui-meme", () => {
+  // Shein colle "Entrepot UE" devant le libelle, sans ligne separee.
+  const r = analyseCart("Entrepot UE Top en dentelle marron manches longues\n8,37€");
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /Aucun frais d'importation/);
+  assert.equal(r.exoneres.length, 1);
+});
+
+test("un panier entierement assujetti reste calcule normalement", () => {
+  const r = analyseCart("T-shirt coton col rond\n5,99€\nMug ceramique\n8,50€");
+  assert.equal(r.ok, true);
+  assert.equal(r.categories.min, 2);
+  assert.equal(r.exoneres.length, 0);
+});
