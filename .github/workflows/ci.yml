@@ -18,12 +18,16 @@ jobs:
       # Suite unitaire et d invariants. Aucune dependance de test.
       - run: npm test
 
+      # Verification des types JSDoc. Le bundle genere est une entree du
+      # typage, donc le script le reconstruit avant de lancer tsc.
+      - run: npm run typecheck
+
       # Verifie que les bugs connus font bien rougir la suite : un test qui
       # passe ne prouve rien s il passe aussi quand on casse le code.
       - run: npm run check:negative
 
       # La page livree doit calculer comme les sources.
-      - run: npm run build:local
+
       - run: npm run verify:local
 
       # Les tests d extraction demandent un navigateur : ils tournent en local

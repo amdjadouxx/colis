@@ -1,8 +1,12 @@
 {
   "name": "@colis/parse",
   "version": "0.1.0",
+  "description": "Lecture d un panier colle en texte brut : libelles, quantites, prix, devises.",
+  "license": "MIT",
   "type": "module",
   "private": true,
   "main": "src/index.js",
-  "exports": { ".": "./src/index.js" }
+  "exports": {
+    ".": "./src/index.js"
+  }
 }

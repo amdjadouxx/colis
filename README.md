@@ -23,12 +23,19 @@ Et dans beaucoup de cas la réponse est **indéterminable** : le code à 6 chiff
 ## Architecture
 
 ```
-packages/partition   solveur min/max exact, zéro dépendance
+packages/partition   solveur min/max exact des catégories, zéro dépendance
 packages/rules       barèmes versionnés (données, pas code)
 packages/catalog     catalogue d'articles + résolution texte → codes candidats
+packages/parse       lecture d'un panier collé : libellés, quantités, prix, devises
+packages/extract     choix de la zone panier dans une page, sans sélecteur par site
+packages/analyse     répartition des frais par ligne et taux de surcoût effectif
+
+apps/web             page autonome, générée
+apps/extension       extension de navigateur, permission activeTab seule
 apps/api             Worker Cloudflare, calcul local synchrone
-tools/taric-sync     nomenclature TARIC, mensuelle
-tools/rules-watch    veille réglementaire via LinkUp, quotidienne
+
+test/                politiques du dépôt : aucun réseau, aucun stockage
+tools/               build, sondes, contrôles négatifs, garde-fous
 ```
 
 ### Le solveur

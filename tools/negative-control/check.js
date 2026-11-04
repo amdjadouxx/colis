@@ -90,8 +90,8 @@ const MUTATIONS = [
   {
     name: "stockage navigateur introduit dans l extension",
     file: "apps/extension/src/popup.js",
-    from: "const out = document.getElementById(\"out\");",
-    to: "const out = document.getElementById(\"out\");\nlocalStorage.setItem(\"last\", \"1\");",
+    from: "const message = (html) =>",
+    to: "localStorage.setItem(\"last\", \"1\");\nconst message = (html) =>",
   },
   {
     name: "permission d hote large ajoutee au manifeste",
@@ -103,7 +103,7 @@ const MUTATIONS = [
 
 async function suitePasses(dir) {
   try {
-    await run(process.execPath, ["--test", "packages/catalog/test/catalog.test.js", "packages/partition/test/partition.test.js", "packages/parse/test/invariants.test.js", "packages/parse/test/regressions.test.js", "packages/analyse/test/pipeline.test.js", "packages/analyse/test/no-network.test.js"], {
+    await run(process.execPath, ["--test", "packages/catalog/test/catalog.test.js", "packages/partition/test/partition.test.js", "packages/parse/test/invariants.test.js", "packages/parse/test/regressions.test.js", "packages/analyse/test/pipeline.test.js", "test/policy.test.js"], {
       cwd: dir,
       windowsHide: true,
     });

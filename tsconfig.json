@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": [
+      "es2023",
+      "dom"
+    ],
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "baseUrl": ".",
+    "paths": {
+      "@colis/partition": [
+        "packages/partition/src/index.js"
+      ],
+      "@colis/rules": [
+        "packages/rules/src/index.js"
+      ],
+      "@colis/catalog": [
+        "packages/catalog/src/index.js"
+      ],
+      "@colis/parse": [
+        "packages/parse/src/index.js"
+      ],
+      "@colis/analyse": [
+        "packages/analyse/src/index.js"
+      ],
+      "@colis/extract": [
+        "packages/extract/src/index.js"
+      ]
+    },
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "packages/*/src/**/*.js",
+    "apps/*/src/**/*.js",
+    "tools/**/*.js",
+    "test/**/*.js"
+  ],
+  "exclude": [
+    "**/engine.bundle.js",
+    "**/injected.js",
+    "node_modules"
+  ]
+}

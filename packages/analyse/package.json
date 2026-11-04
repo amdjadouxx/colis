@@ -1,8 +1,18 @@
 {
   "name": "@colis/analyse",
   "version": "0.1.0",
+  "description": "Repartition des frais par ligne et taux de surcout effectif.",
+  "license": "MIT",
   "type": "module",
   "private": true,
   "main": "src/index.js",
-  "exports": { ".": "./src/index.js" }
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@colis/partition": "*",
+    "@colis/rules": "*",
+    "@colis/parse": "*",
+    "@colis/catalog": "*"
+  }
 }

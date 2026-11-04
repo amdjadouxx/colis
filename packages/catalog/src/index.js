@@ -89,8 +89,9 @@ const INDEX = (() => {
     for (const phrase of phrases) {
       const key = normalize(phrase);
       if (!key) continue;
-      if (!map.has(key)) map.set(key, new Set());
-      map.get(key).add(it.id);
+      const bucket = map.get(key);
+      if (bucket) bucket.add(it.id);
+      else map.set(key, new Set([it.id]));
     }
   }
   return map;
@@ -127,6 +128,9 @@ export function resolveText(text) {
       const existing = found.get(id);
       if (existing && existing.via.length >= phrase.length) continue;
       const it = itemById(id);
+      // L identifiant vient de l index, donc l article existe. Le test garde
+      // la fonction honnete si l index et le catalogue divergeaient un jour.
+      if (!it) continue;
       found.set(id, { id: it.id, label: it.label, codes: it.codes, via: phrase });
     }
   }

@@ -87,7 +87,8 @@ function handleEstimate(payload) {
   return json({
     catalogVersion: CATALOG_VERSION,
     articles: unique.map((id) => {
-      const it = itemById(id);
+      // Les identifiants inconnus ont deja ete rejetes en 400 plus haut.
+      const it = /** @type {NonNullable<ReturnType<typeof itemById>>} */ (itemById(id));
       return {
         id: it.id,
         label: it.label,

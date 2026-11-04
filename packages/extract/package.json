@@ -1,0 +1,12 @@
+{
+  "name": "@colis/extract",
+  "version": "0.1.0",
+  "description": "Choisit la zone panier d'une page de place de marche et en rend le texte, sans selecteur propre a un site.",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

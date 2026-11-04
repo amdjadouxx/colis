@@ -1,8 +1,12 @@
 {
   "name": "@colis/catalog",
   "version": "0.1.0",
+  "description": "Catalogue d articles, synonymes multilingues et resolution d un libelle produit vers ses sous-positions candidates.",
+  "license": "MIT",
   "type": "module",
   "private": true,
   "main": "src/index.js",
-  "exports": { ".": "./src/index.js" }
+  "exports": {
+    ".": "./src/index.js"
+  }
 }

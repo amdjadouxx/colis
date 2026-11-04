@@ -76,9 +76,13 @@ export function analyse({ lines, goodsValue, includeVat = false, onDate }) {
   /** @type {Map<string, typeof grouped>} */
   const buckets = new Map();
   for (const g of grouped) {
-    const code = codeOf.get(g.id);
-    if (!buckets.has(code)) buckets.set(code, []);
-    buckets.get(code).push(g);
+    // assign() a affecte un code a chaque article, donc la cle existe
+    // toujours. On la materialise plutot que de supposer : un article sans
+    // code serait une erreur de programmation, pas une donnee invalide.
+    const code = codeOf.get(g.id) ?? g.codes[0];
+    const bucket = buckets.get(code);
+    if (bucket) bucket.push(g);
+    else buckets.set(code, [g]);
   }
 
   const rows = [];

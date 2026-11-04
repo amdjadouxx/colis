@@ -23,7 +23,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** Dossiers parcourus : tout ce qui tourne chez l'utilisateur. */
 const SCANNED = [
@@ -32,10 +32,12 @@ const SCANNED = [
   "packages/catalog/src",
   "packages/parse/src",
   "packages/analyse/src",
+  "packages/extract/src",
   "apps/extension/src",
 ];
 
 /** Tout ce qui peut faire sortir une donnee du navigateur. */
+/** @type {[RegExp, string][]} */
 const FORBIDDEN = [
   [/\bfetch\s*\(/, "fetch()"],
   [/XMLHttpRequest/, "XMLHttpRequest"],
@@ -51,6 +53,7 @@ const FORBIDDEN = [
  * Stockage navigateur : pas un appel reseau, mais une persistance par
  * visiteur que LEGAL.md ne couvre pas. Interdit tant que ce n'est pas decide.
  */
+/** @type {[RegExp, string][]} */
 const STORAGE = [
   [/localStorage/, "localStorage"],
   [/sessionStorage/, "sessionStorage"],

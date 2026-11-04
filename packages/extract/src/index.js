@@ -35,9 +35,10 @@ const QTY_RE =
 export function textOf(node) {
   if (node.nodeType === 3) return node.nodeValue || "";
   if (node.nodeType !== 1) return "";
-  if (EXCLUDED_TAGS.has(node.tagName)) return "";
+  const el = /** @type {Element} */ (node);
+  if (EXCLUDED_TAGS.has(el.tagName)) return "";
   const parts = [];
-  for (const child of node.childNodes) {
+  for (const child of Array.from(el.childNodes)) {
     const t = textOf(child).trim();
     if (t) parts.push(t);
   }
@@ -150,8 +151,20 @@ function measure(el) {
 }
 
 /**
+ * @typedef {Object} ZonePanier
+ * @property {string} text      Texte de la zone retenue, montants recolles.
+ * @property {number} prices    Nombre de montants reperes.
+ * @property {number} qtys      Nombre de marqueurs de quantite reperes.
+ * @property {number} length    Longueur du texte retenu.
+ * @property {string} how       Pourquoi ce bloc a ete retenu, en clair.
+ * @property {boolean} [fallback]  Vrai si aucun panier n a ete trouve.
+ * @property {{tag: string, len: number, p: number, q: number, reco: boolean}[]} [top]
+ *   Meilleurs candidats, pour diagnostiquer un mauvais choix.
+ */
+
+/**
  * @param {Document} doc
- * @returns {{text: string, prices: number, qtys: number, length: number, how: string}}
+ * @returns {ZonePanier}
  */
 export function extractCartText(doc) {
   // Quand la page annonce elle-meme un panier vide, on s'arrete la. Sans
@@ -173,10 +186,10 @@ export function extractCartText(doc) {
     };
   }
 
-  /** @type {ReturnType<typeof score>[]} */
+  /** @type {NonNullable<ReturnType<typeof measure>>[]} */
   const candidates = [];
 
-  for (const el of doc.querySelectorAll("div, section, main, ul, ol, table, form")) {
+  for (const el of Array.from(doc.querySelectorAll("div, section, main, ul, ol, table, form"))) {
     if (EXCLUDED_TAGS.has(el.tagName)) continue;
     if (el.closest("nav, header, footer, aside")) continue;
     const s = measure(el);

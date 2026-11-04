@@ -120,6 +120,27 @@ const EXONERE =
 /** Mention inverse : l'article est bien soumis aux frais. */
 const ASSUJETTI = /(?:des\s+)?frais\s+d.?\s*importation\s+s.?\s*appliq|import\s+(?:fees|charges)\s+appl/i;
 
+/**
+ * Un article lu dans un panier colle.
+ *
+ * @typedef {Object} ArticleLu
+ * @property {string} title
+ * @property {number} qty
+ * @property {number|null} unitPrice
+ * @property {string|null} [currency]  Code ISO du montant lu, "EUR" par defaut.
+ * @property {boolean|null} [exempt]   La page declare l article expedie depuis
+ *   l'Union, donc hors frais d'importation. null quand elle ne dit rien.
+ */
+
+/**
+ * @typedef {Object} PanierLu
+ * @property {ArticleLu[]} items
+ * @property {string[]} ignored        Lignes ecartees : totaux, livraison, en-tetes.
+ * @property {number|null} totalValue
+ * @property {string[]} currencies     Devises rencontrees, codes ISO.
+ * @property {boolean} foreignCurrency Vrai des qu'un montant n'est pas en euros.
+ */
+
 const MINUS = /^[-−–—]$/;
 const PLUS = /^[+＋]$/;
 
@@ -167,7 +188,7 @@ function followsWithPriceOrQty(lines, index) {
 
 /**
  * @param {string} line
- * @returns {{price: number|null, qty: number|null, text: string}}
+ * @returns {{price: number|null, qty: number|null, currency: string|null, text: string}}
  */
 function readLine(line) {
   let text = line.trim();
@@ -210,7 +231,7 @@ function readLine(line) {
  * montre pas toujours les prix, et perdre la ligne serait pire que l'ignorer.
  *
  * @param {string} blob
- * @returns {{items: {title: string, qty: number, unitPrice: number|null}[], ignored: string[], totalValue: number|null}}
+ * @returns {PanierLu}
  */
 export function parseCart(blob) {
   const raw = String(blob ?? "")

@@ -25,7 +25,7 @@ const MODULES = [
   // Le lecteur de zone panier est embarque dans la page aussi : elle accepte
   // du HTML colle, et doit alors choisir la zone exactement comme
   // l'extension. Sans lui, la page ne saurait traiter que du texte.
-  "apps/extension/src/extract.js",
+  "packages/extract/src/index.js",
   "packages/partition/src/index.js",
   "packages/rules/src/index.js",
   "packages/catalog/src/index.js",
@@ -65,7 +65,8 @@ const bodies = await Promise.all(
   MODULES.map(async (rel) => `// ===== ${rel} =====\n${flatten(await read(rel))}`)
 );
 
-const bundle = `/**
+const bundle = `// @ts-nocheck — fichier genere, la source de verite est packages/.
+/**
  * GENERE par tools/build-local/build.js. Ne pas modifier a la main.
  * Source de verite : les modules de packages/.
  */
@@ -105,8 +106,9 @@ const aRemplir = (legal.match(/__[A-Z_]+__/g) || []).length;
 // expression, d'ou l'enveloppe en expression de fonction immediatement
 // appelee : pas de module, pas d'import, une valeur en retour.
 const EXT_SRC = join(ROOT, "apps", "extension", "src");
-const extract = await read("apps/extension/src/extract.js");
-const injected = `/**
+const extract = await read("packages/extract/src/index.js");
+const injected = `// @ts-nocheck — fichier genere, la source de verite est packages/extract.
+/**
  * GENERE par tools/build-local/build.js depuis extract.js. Ne pas modifier.
  */
 (() => {

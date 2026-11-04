@@ -14,7 +14,15 @@
 
 import { analyseCart } from "./engine.bundle.js";
 
-const out = document.getElementById("out");
+/**
+ * Le conteneur de resultat est declare dans popup.html, donc toujours la.
+ * @type {HTMLElement}
+ */
+const out = /** @type {HTMLElement} */ (document.getElementById("out"));
+
+/** API de l extension, fournie par le navigateur. @type {any} */
+// eslint-disable-next-line no-undef
+const navigateur = /** @type {any} */ (globalThis).chrome;
 const eur = (v) => v.toFixed(2).replace(".", ",") + " €";
 const pct = (v) => (v === null ? "?" : "+" + Math.round(100 * v) + " %");
 const esc = (s) =>
@@ -89,12 +97,12 @@ function render(picked) {
 
 async function main() {
   try {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const [tab] = await navigateur.tabs.query({ active: true, currentWindow: true });
     if (!tab || !tab.id) {
       message("Aucun onglet actif.");
       return;
     }
-    const [injection] = await chrome.scripting.executeScript({
+    const [injection] = await navigateur.scripting.executeScript({
       target: { tabId: tab.id },
       files: ["src/injected.js"],
     });

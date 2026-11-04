@@ -1,8 +1,12 @@
 {
   "name": "@colis/partition",
   "version": "0.1.0",
+  "description": "Partitionne un panier en categories tarifaires : minimum et maximum exacts de sous-positions distinctes.",
+  "license": "MIT",
   "type": "module",
   "private": true,
   "main": "src/index.js",
-  "exports": { ".": "./src/index.js" }
+  "exports": {
+    ".": "./src/index.js"
+  }
 }

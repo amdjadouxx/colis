@@ -10,8 +10,52 @@ import { resolveText } from "@colis/catalog";
 import { analyse } from "./index.js";
 
 /**
+ * Une ligne de panier reconnue, rattachee a un article du catalogue.
+ *
+ * @typedef {Object} LigneReconnue
+ * @property {string} id
+ * @property {string} label
+ * @property {string[]} codes       Sous-positions candidates.
+ * @property {number} qty
+ * @property {number} value         Prix unitaire multiplie par la quantite, 0 si inconnu.
+ * @property {string|null} undetermined
+ * @property {string} source        Libelle brut, tel que lu sur la page.
+ * @property {boolean} exempt       Declare expedie depuis l'Union par la page.
+ */
+
+/**
+ * Refus motive. Il y en a quatre, et ils disent des choses differentes :
+ * rien de reconnu, pas de prix donc pas un panier, ou tout est exonere.
+ *
+ * @typedef {Object} AnalyseRefusee
+ * @property {false} ok
+ * @property {string} reason
+ * @property {ReturnType<typeof parseCart>} parsed
+ * @property {{title: string, qty: number, unitPrice: number|null}[]} unrecognised
+ * @property {LigneReconnue[]} [lines]
+ * @property {LigneReconnue[]} [exoneres]
+ */
+
+/**
+ * @typedef {ReturnType<typeof analyse> & {
+ *   ok: true,
+ *   lines: LigneReconnue[],
+ *   exoneres: LigneReconnue[],
+ *   unrecognised: {title: string, qty: number, unitPrice: number|null}[],
+ *   foreignCurrency: boolean,
+ *   currencies: string[],
+ *   coverage: {recognised: number, parsed: number, ratio: number, missingPrices: number},
+ * }} AnalyseReussie
+ */
+
+/**
+ * Le type de retour est une union discriminee par `ok`. C'est deliberé :
+ * quatre refus distincts cohabitent avec le cas nominal, et sans
+ * discriminant l'appelant lit des champs absents sans que rien ne l'arrete.
+ *
  * @param {string} blob
  * @param {{includeVat?: boolean, onDate?: string, goodsValue?: number}} [options]
+ * @returns {AnalyseRefusee | AnalyseReussie}
  */
 export function analyseCart(blob, options = {}) {
   const parsed = parseCart(blob);

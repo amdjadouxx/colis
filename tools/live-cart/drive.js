@@ -60,6 +60,7 @@ function connect(wsUrl) {
   const ws = new WebSocket(wsUrl);
   const pending = new Map();
   let id = 0;
+  /** @type {Promise<void>} */
   const ready = new Promise((resolve, reject) => {
     ws.addEventListener("open", () => resolve());
     ws.addEventListener("error", () => reject(new Error("WebSocket en echec")));
